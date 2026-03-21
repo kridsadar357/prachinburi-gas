@@ -1,0 +1,2719 @@
+==========================================
+[2026-03-20 06:12:58] Starting: bun install
+==========================================
+[BUN] Installing dependencies...
+[0.24ms] ".env"
+bun install v1.3.10 (30e609e0)
+
++ @tailwindcss/postcss@4.1.18
++ @types/react@19.2.8
++ @types/react-dom@19.2.3
++ bun-types@1.3.6
++ eslint@9.39.2
++ eslint-config-next@16.1.3
++ tailwindcss@4.1.18
++ tw-animate-css@1.4.0
++ typescript@5.9.3
++ @dnd-kit/core@6.3.1
++ @dnd-kit/sortable@10.0.0
++ @dnd-kit/utilities@3.2.2
++ @hookform/resolvers@5.2.2
++ @mdxeditor/editor@3.52.3
++ @prisma/client@6.19.2
++ @radix-ui/react-accordion@1.2.12
++ @radix-ui/react-alert-dialog@1.1.15
++ @radix-ui/react-aspect-ratio@1.1.8
++ @radix-ui/react-avatar@1.1.11
++ @radix-ui/react-checkbox@1.3.3
++ @radix-ui/react-collapsible@1.1.12
++ @radix-ui/react-context-menu@2.2.16
++ @radix-ui/react-dialog@1.1.15
++ @radix-ui/react-dropdown-menu@2.1.16
++ @radix-ui/react-hover-card@1.1.15
++ @radix-ui/react-label@2.1.8
++ @radix-ui/react-menubar@1.1.16
++ @radix-ui/react-navigation-menu@1.2.14
++ @radix-ui/react-popover@1.1.15
++ @radix-ui/react-progress@1.1.8
++ @radix-ui/react-radio-group@1.3.8
++ @radix-ui/react-scroll-area@1.2.10
++ @radix-ui/react-select@2.2.6
++ @radix-ui/react-separator@1.1.8
++ @radix-ui/react-slider@1.3.6
++ @radix-ui/react-slot@1.2.4
++ @radix-ui/react-switch@1.2.6
++ @radix-ui/react-tabs@1.1.13
++ @radix-ui/react-toast@1.2.15
++ @radix-ui/react-toggle@1.1.10
++ @radix-ui/react-toggle-group@1.1.11
++ @radix-ui/react-tooltip@1.2.8
++ @reactuses/core@6.1.9
++ @tanstack/react-query@5.90.19
++ @tanstack/react-table@8.21.3
++ class-variance-authority@0.7.1
++ clsx@2.1.1
++ cmdk@1.1.1
++ date-fns@4.1.0
++ embla-carousel-react@8.6.0
++ framer-motion@12.26.2
++ input-otp@1.4.2
++ lucide-react@0.525.0
++ next@16.1.3
++ next-auth@4.24.13
++ next-intl@4.7.0
++ next-themes@0.4.6
++ prisma@6.19.2
++ react@19.2.3
++ react-day-picker@9.13.0
++ react-dom@19.2.3
++ react-hook-form@7.71.1
++ react-markdown@10.1.0
++ react-resizable-panels@3.0.6
++ react-syntax-highlighter@15.6.6
++ recharts@2.15.4
++ sharp@0.34.5
++ sonner@2.0.7
++ tailwind-merge@3.4.0
++ tailwindcss-animate@1.0.7
++ uuid@11.1.0
++ vaul@1.1.2
++ z-ai-web-dev-sdk@0.0.17
++ zod@4.3.5
++ zustand@5.0.10
+
+827 packages installed [8.74s]
+==========================================
+[2026-03-20 06:13:07] Completed: bun install
+[LOG] Step: bun install | Duration: 9s
+==========================================
+
+==========================================
+[2026-03-20 06:13:07] Starting: bun run db:push
+==========================================
+[BUN] Setting up database...
+$ prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": SQLite database "custom.db" at "file:/home/z/my-project/db/custom.db"
+
+SQLite database custom.db created at file:/home/z/my-project/db/custom.db
+
+🚀  Your database is now in sync with your Prisma schema. Done in 9ms
+
+Running generate... (Use --skip-generate to skip the generators)
+[2K[1A[2K[GRunning generate... - Prisma Client
+[2K[1A[2K[G✔ Generated Prisma Client (v6.19.2) to ./node_modules/@prisma/client in 45ms
+┌─────────────────────────────────────────────────────────┐
+│  Update available 6.19.2 -> 7.5.0                       │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+==========================================
+[2026-03-20 06:13:08] Completed: bun run db:push
+[LOG] Step: bun run db:push | Duration: 1s
+==========================================
+
+==========================================
+[2026-03-20 06:13:08] Starting: Starting Next.js dev server
+==========================================
+[BUN] Starting development server...
+==========================================
+$ next dev -p 3000 2>&1 | tee dev.log
+[2026-03-20 06:13:08] Completed: Starting Next.js dev server
+[LOG] Step: Starting Next.js dev server | Duration: 0s
+==========================================
+
+==========================================
+[2026-03-20 06:13:08] Starting: Waiting for Next.js dev server
+==========================================
+Waiting for Next.js dev server to be ready on localhost:3000...
+Attempt 1/60: Next.js dev server not ready yet, waiting...
+▲ Next.js 16.1.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://21.0.3.3:3000
+- Environments: .env
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+  The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+  	- include was updated to add '.next/dev/types/**/*.ts'
+
+  The following mandatory changes were made to your tsconfig.json:
+
+  	- jsx was set to react-jsx (next.js uses the React automatic runtime)
+
+✓ Ready in 567ms
+Next.js dev server is ready!
+ GET / 200 in 2.2s (compile: 2.0s, render: 171ms)
+==========================================
+[2026-03-20 06:13:11] Completed: Waiting for Next.js dev server
+[LOG] Step: Waiting for Next.js dev server | Duration: 3s
+==========================================
+
+==========================================
+[2026-03-20 06:13:11] Starting: Health check
+==========================================
+[BUN] Performing health check...
+ GET / 200 in 2.3s (compile: 2.2s, render: 133ms)
+ GET / 200 in 24ms (compile: 1996µs, render: 22ms)
+[BUN] Health check passed
+==========================================
+[2026-03-20 06:13:11] Completed: Health check
+[LOG] Step: Health check | Duration: 0s
+==========================================
+
+==========================================
+[2026-03-20 06:13:11] Starting: Starting mini-services
+==========================================
+Found mini-services directory, scanning for sub-services...
+Mini-services startup completed. Started 0 service(s).
+==========================================
+[2026-03-20 06:13:11] Completed: Starting mini-services
+[LOG] Step: Starting mini-services | Duration: 0s
+==========================================
+
+Next.js dev server is running in background (PID: 459).
+Use 'kill 459' to stop it.
+ GET / 200 in 44ms (compile: 25ms, render: 19ms)
+ GET / 200 in 41ms (compile: 3ms, render: 38ms)
+ GET / 200 in 23ms (compile: 2ms, render: 21ms)
+ GET / 200 in 23ms (compile: 1739µs, render: 22ms)
+ GET / 200 in 12ms (compile: 1591µs, render: 11ms)
+ GET / 200 in 13ms (compile: 2ms, render: 11ms)
+ GET / 200 in 14ms (compile: 1826µs, render: 12ms)
+ GET / 200 in 12ms (compile: 1587µs, render: 10ms)
+ GET / 200 in 48ms (compile: 24ms, render: 24ms)
+ GET / 200 in 11ms (compile: 1497µs, render: 10ms)
+ GET / 200 in 54ms (compile: 1199µs, render: 53ms)
+ GET / 200 in 44ms (compile: 1788µs, render: 43ms)
+ GET / 200 in 34ms (compile: 1839µs, render: 32ms)
+ GET / 200 in 23ms (compile: 3ms, render: 20ms)
+ GET / 200 in 23ms (compile: 12ms, render: 11ms)
+ GET / 200 in 11ms (compile: 1422µs, render: 9ms)
+ GET / 200 in 24ms (compile: 1644µs, render: 23ms)
+ GET / 200 in 25ms (compile: 11ms, render: 14ms)
+ GET / 200 in 46ms (compile: 23ms, render: 22ms)
+ GET / 200 in 24ms (compile: 1759µs, render: 22ms)
+ GET / 200 in 11ms (compile: 1503µs, render: 10ms)
+ GET / 200 in 25ms (compile: 1851µs, render: 23ms)
+ GET / 200 in 15ms (compile: 1452µs, render: 13ms)
+ GET / 200 in 12ms (compile: 1639µs, render: 11ms)
+ GET / 200 in 12ms (compile: 1700µs, render: 11ms)
+ GET / 200 in 36ms (compile: 1877µs, render: 34ms)
+ GET / 200 in 21ms (compile: 1934µs, render: 19ms)
+ GET / 200 in 21ms (compile: 11ms, render: 10ms)
+ GET / 200 in 23ms (compile: 1325µs, render: 22ms)
+ GET / 200 in 11ms (compile: 1395µs, render: 10ms)
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+✓ Compiled in 1190ms
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:89:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 87 |[39m     [90m// Dynamic import of Leaflet[39m
+ [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:153:24
+Module not found: Can't resolve 'leaflet'
+[0m [90m 151 |[39m       [36mif[39m ([33m![39mmapRef[33m.[39mcurrent [33m||[39m stations[33m.[39mlength [33m===[39m [35m0[39m) [36mreturn[39m[33m;[39m
+ [90m 152 |[39m       
+[31m[1m>[22m[39m[90m 153 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+ [90m     |[39m                        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 154 |[39m
+ [90m 155 |[39m       [90m// Clear existing markers[39m
+ [90m 156 |[39m       markersRef[33m.[39mcurrent[33m.[39mforEach(marker [33m=>[39m marker[33m.[39mremove())[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:90:13
+Module not found: Can't resolve 'leaflet/dist/leaflet.css'
+[0m [90m 88 |[39m     [36mconst[39m initMap [33m=[39m [36masync[39m () [33m=>[39m {
+ [90m 89 |[39m       [36mconst[39m [33mL[39m [33m=[39m ([36mawait[39m [36mimport[39m([32m'leaflet'[39m))[33m.[39m[36mdefault[39m[33m;[39m
+[31m[1m>[22m[39m[90m 90 |[39m       [36mawait[39m [36mimport[39m([32m'leaflet/dist/leaflet.css'[39m)[33m;[39m
+ [90m    |[39m             [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 91 |[39m       
+ [90m 92 |[39m       [90m// Fix Leaflet default marker icon[39m
+ [90m 93 |[39m       [36mdelete[39m ([33mL[39m[33m.[39m[33mIcon[39m[33m.[39m[33mDefault[39m[33m.[39mprototype [36mas[39m any)[33m.[39m_getIconUrl[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+✓ Compiled in 498ms
+ GET / 200 in 254ms (compile: 233ms, render: 21ms)
+ GET /api/stations 200 in 371ms (compile: 363ms, render: 9ms)
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 386ms (compile: 329ms, render: 57ms)
+ GET / 200 in 134ms (compile: 4ms, render: 129ms)
+✓ Compiled in 335ms
+ GET / 200 in 60ms (compile: 31ms, render: 29ms)
+ GET / 200 in 164ms (compile: 3ms, render: 161ms)
+ GET / 200 in 38ms (compile: 2ms, render: 36ms)
+ GET /api/stations 200 in 7ms (compile: 3ms, render: 5ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 13ms (compile: 7ms, render: 6ms)
+✓ Compiled in 136ms
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 9ms (compile: 2ms, render: 7ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/stations 200 in 7ms (compile: 4ms, render: 3ms)
+ GET / 200 in 144ms (compile: 28ms, render: 116ms)
+ GET /api/stations 200 in 6ms (compile: 2ms, render: 4ms)
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 7ms (compile: 1384µs, render: 5ms)
+ GET / 200 in 46ms (compile: 5ms, render: 42ms)
+ GET /api/stations 200 in 7ms (compile: 1997µs, render: 5ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 8ms (compile: 1961µs, render: 7ms)
+ GET /api/stations 200 in 6ms (compile: 2ms, render: 4ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 8ms (compile: 3ms, render: 6ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET / 200 in 39ms (compile: 3ms, render: 36ms)
+ GET /api/stations 200 in 5ms (compile: 2ms, render: 3ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 7ms (compile: 2ms, render: 5ms)
+ GET / 200 in 41ms (compile: 3ms, render: 38ms)
+ GET /api/stations 200 in 7ms (compile: 3ms, render: 3ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 8ms (compile: 3ms, render: 5ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+✓ Compiled in 179ms
+ GET / 200 in 48ms (compile: 32ms, render: 17ms)
+ GET /api/stations 200 in 40ms (compile: 32ms, render: 9ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 7ms (compile: 1517µs, render: 5ms)
+ GET / 200 in 113ms (compile: 2ms, render: 110ms)
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 9ms (compile: 2ms, render: 6ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+⚠ Cross origin request detected from preview-chat-1fa367bc-becc-4fc8-9a1d-b44a83b02e1d.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET /api/stations 200 in 5ms (compile: 1557µs, render: 3ms)
+✓ Compiled in 136ms
+ GET / 200 in 51ms (compile: 32ms, render: 19ms)
+ GET / 200 in 104ms (compile: 3ms, render: 100ms)
+ GET /api/stations 200 in 7ms (compile: 2ms, render: 5ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 41ms (compile: 31ms, render: 10ms)
+ GET / 200 in 45ms (compile: 3ms, render: 42ms)
+ GET /api/stations 200 in 6ms (compile: 2ms, render: 4ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 7ms (compile: 2ms, render: 5ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET / 200 in 39ms (compile: 3ms, render: 36ms)
+ GET /api/stations 200 in 8ms (compile: 2ms, render: 6ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 9ms (compile: 3ms, render: 6ms)
+✓ Compiled in 117ms
+ GET /api/stations 200 in 46ms (compile: 36ms, render: 10ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 8ms (compile: 2ms, render: 6ms)
+ GET / 200 in 132ms (compile: 29ms, render: 103ms)
+ GET /api/stations 200 in 7ms (compile: 3ms, render: 5ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 8ms (compile: 2ms, render: 6ms)
+ GET / 200 in 40ms (compile: 3ms, render: 36ms)
+ GET /api/stations 200 in 6ms (compile: 1933µs, render: 4ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+ GET /api/status 200 in 8ms (compile: 1994µs, render: 6ms)
+ GET / 200 in 39ms (compile: 3ms, render: 36ms)
+ GET /api/stations 200 in 6ms (compile: 2ms, render: 4ms)
+prisma:query SELECT 1
+prisma:query DELETE FROM `main`.`station_fuel_status` WHERE (`main`.`station_fuel_status`.`is_empty` = ? AND `main`.`station_fuel_status`.`last_updated` < ?)
+ GET /api/status 200 in 8ms (compile: 2ms, render: 6ms)
+prisma:query SELECT `main`.`station_fuel_status`.`station_id`, `main`.`station_fuel_status`.`fuel_type`, `main`.`station_fuel_status`.`last_updated` FROM `main`.`station_fuel_status` WHERE `main`.`station_fuel_status`.`is_empty` = ? LIMIT ? OFFSET ?
+Persisting failed: Unable to write SST file 00000265.sst
+
+Caused by:
+    No such file or directory (os error 2)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+
+thread '<unnamed>' (480) panicked at /build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17:
+Failed to restore task data (corrupted database or bug): Meta for get_source_map_rope_operation (TaskId 189925))
+
+Caused by:
+    0: Looking up data for TaskId 189925 from database failed
+    1: Unable to open static sorted file referenced from 00000173.meta
+    2: Unable to open static sorted file 00000168.sst
+    3: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+⨯ Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+
+thread 'tokio-runtime-worker' (1210) panicked at /build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17:
+Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Caused by:
+    0: Looking up data for TaskId 189942 from database failed
+    1: Unable to open static sorted file referenced from 00000217.meta
+    2: Unable to open static sorted file 00000213.sst
+    3: No such file or directory (os error 2)
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to /tmp/next-panic-ea8b05f7ae8eebce23112896d36d79f9.log.
+
+To help make Turbopack better, report this error by clicking here: https://github.com/vercel/next.js/discussions/new?category=turbopack-error-report&title=Turbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app&body=Turbopack%20version%3A%20%60731ace46%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0ATurbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace
+-----
+
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+⨯ Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to /tmp/next-panic-ea8b05f7ae8eebce23112896d36d79f9.log.
+
+To help make Turbopack better, report this error by clicking here: https://github.com/vercel/next.js/discussions/new?category=turbopack-error-report&title=Turbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app&body=Turbopack%20version%3A%20%60731ace46%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0ATurbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace
+-----
+
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+⨯ Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to /tmp/next-panic-ea8b05f7ae8eebce23112896d36d79f9.log.
+
+To help make Turbopack better, report this error by clicking here: https://github.com/vercel/next.js/discussions/new?category=turbopack-error-report&title=Turbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app&body=Turbopack%20version%3A%20%60731ace46%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0ATurbopack%20Error%3A%20Failed%20to%20write%20page%20endpoint%20%2F_app%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace
+-----
+
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error: ENOENT: no such file or directory, open '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/z/my-project/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Error [TurbopackInternalError]: Failed to write page endpoint /_app
+
+Caused by:
+- content is not available as task execution failed
+- content is not available as task execution failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+
+Debug info:
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <PageEndpoint as Endpoint>::output failed
+- Failed to write page endpoint /_app
+- Execution of PageEndpoint::output failed
+- Execution of *ChunkGroupResult::all_assets failed
+- Execution of PageEndpoint::client_chunk_group failed
+- Execution of PageEndpoint::client_evaluatable_assets failed
+- content is not available as task execution failed
+- Execution of PageEndpoint::client_module failed
+- content is not available as task execution failed
+- Execution of *create_page_loader_entry_module failed
+- Execution of PagesProject::client_module_context failed
+- Failed to restore task data (corrupted database or bug): Meta for PagesProject::client_resolve_options_context (TaskId 189942))
+  
+  Caused by:
+      0: Looking up data for TaskId 189942 from database failed
+      1: Unable to open static sorted file referenced from 00000217.meta
+      2: Unable to open static sorted file 00000213.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to write page endpoint /_app) {
+  location: '/build/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+error: script "dev" was terminated by signal SIGTERM (Polite quit request)
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+[?25h
