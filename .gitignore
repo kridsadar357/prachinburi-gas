@@ -49,3 +49,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+# System files
+.accesslog
+.config
+.stats
+
+# Uploads
+upload/

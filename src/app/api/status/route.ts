@@ -1,74 +1,68 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+
+// In-memory storage สำหรับเก็บสถานะน้ำมันหมด
+// ใน production ควรใช้ database จริง
+const outOfStockStore: Map<string, { fuelTypes: string[], lastUpdated: Date, reports: { fuelType: string, timestamp: Date }[] }> = new Map();
 
 /**
  * GET /api/status
  * 
  * ส่งคืนรายการน้ำมันที่หมดทั้งหมดในแต่ละปั๊ม
  * ใช้โดย Frontend เพื่อแสดงการแจ้งเตือนบนแผนที่
- * 
- * ล้างสถานะที่หมดอายุ (เก่ากว่า 24 ชั่วโมง) อัตโนมัติ
- * ทำให้ปั๊มสามารถ "กลับมา" จากการหมดชั่วคราวได้
  */
 export async function GET() {
   try {
     // ล้างสถานะเก่า (เก่ากว่า 24 ชั่วโมง)
-    // ทำให้ปั๊มสามารถกลับมาพร้อมบริการได้หลังจากแจ้งว่าหมดไปแล้ว
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     
-    await db.stationFuelStatus.deleteMany({
-      where: {
-        isEmpty: true,
-        lastUpdated: { lt: twentyFourHoursAgo }
-      }
-    });
-
-    // ดึงสถานะน้ำมันหมดทั้งหมด
-    const outOfStockStatuses = await db.stationFuelStatus.findMany({
-      where: {
-        isEmpty: true
-      },
-      select: {
-        stationId: true,
-        fuelType: true,
-        lastUpdated: true
-      }
-    });
-
-    // จัดกลุ่มตามรหัสปั๊มเพื่อให้ Frontend ประมวลผลง่ายขึ้น
-    const statusMap: Record<string, { fuelTypes: string[], lastUpdated: string }[]> = {};
-    
-    for (const status of outOfStockStatuses) {
-      if (!statusMap[status.stationId]) {
-        statusMap[status.stationId] = [];
+    for (const [stationId, data] of outOfStockStore.entries()) {
+      // กรอง reports ที่เก่ากว่า 24 ชั่วโมงออก
+      data.reports = data.reports.filter(r => r.timestamp > twentyFourHoursAgo);
+      
+      // คำนวณสถานะใหม่จาก reports ที่เหลือ
+      const fuelTypeCounts: Record<string, number> = {};
+      for (const report of data.reports) {
+        fuelTypeCounts[report.fuelType] = (fuelTypeCounts[report.fuelType] || 0) + 1;
       }
       
-      // ตรวจสอบว่ามี entry สำหรับน้ำมันชนิดนี้แล้วหรือยัง
-      const existingEntry = statusMap[status.stationId].find(
-        e => e.fuelTypes.includes(status.fuelType)
-      );
+      // เก็บเฉพาะน้ำมันที่มี 3+ reports ใน 1 ชั่วโมง
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+      const recentFuelTypes = new Set<string>();
       
-      if (!existingEntry) {
-        statusMap[status.stationId].push({
-          fuelTypes: [status.fuelType],
-          lastUpdated: status.lastUpdated.toISOString()
-        });
+      for (const report of data.reports) {
+        if (report.timestamp > oneHourAgo) {
+          const count = data.reports.filter(
+            r => r.fuelType === report.fuelType && r.timestamp > oneHourAgo
+          ).length;
+          if (count >= 3) {
+            recentFuelTypes.add(report.fuelType);
+          }
+        }
+      }
+      
+      data.fuelTypes = Array.from(recentFuelTypes);
+      data.lastUpdated = new Date();
+      
+      // ลบ station ที่ไม่มี out of stock แล้ว
+      if (data.fuelTypes.length === 0) {
+        outOfStockStore.delete(stationId);
       }
     }
 
     // แปลงเป็น array format สำหรับ Frontend
-    const result = Object.entries(statusMap).map(([stationId, statuses]) => ({
+    const result = Array.from(outOfStockStore.entries()).map(([stationId, data]) => ({
       stationId,
-      outOfStock: statuses.flatMap(s => s.fuelTypes),
-      lastUpdated: statuses[0]?.lastUpdated || new Date().toISOString()
+      outOfStock: data.fuelTypes,
+      lastUpdated: data.lastUpdated.toISOString()
     }));
 
     return NextResponse.json(result);
   } catch (error) {
     console.error('เกิดข้อผิดพลาดในการดึงสถานะ:', error);
-    return NextResponse.json(
-      { error: 'เกิดข้อผิดพลาดภายในระบบ' },
-      { status: 500 }
-    );
+    // ส่งคืน empty array แทนที่จะเป็น error
+    return NextResponse.json([]);
   }
 }
+
+// Export store ให้ report API ใช้
+export { outOfStockStore };

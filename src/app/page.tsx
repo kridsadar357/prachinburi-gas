@@ -297,9 +297,16 @@ export default function Home() {
     try {
       const response = await fetch('/api/status');
       const data = await response.json();
-      setOutOfStockStatus(data);
+      // ตรวจสอบว่า data เป็น array หรือไม่
+      if (Array.isArray(data)) {
+        setOutOfStockStatus(data);
+      } else {
+        console.error('Invalid status response:', data);
+        setOutOfStockStatus([]);
+      }
     } catch (error) {
       console.error('Failed to fetch status:', error);
+      setOutOfStockStatus([]);
     }
   };
 
