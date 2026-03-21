@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { outOfStockStore } from '../status/route';
+import { db } from '@/lib/db';
 
 // Threshold: จำนวนรายงานที่ต้องการภายใน 1 ชั่วโมงเพื่อ标记ว่าน้ำมันหมด
 const REPORT_THRESHOLD = 3;
 const REPORT_WINDOW_HOURS = 1;
-
-// In-memory storage สำหรับเก็บรายงาน
-const reportsStore: { stationId: string; fuelType: string; userIp: string; reportedAt: Date }[] = [];
 
 /**
  * POST /api/report
@@ -18,7 +15,7 @@ const reportsStore: { stationId: string; fuelType: string; userIp: string; repor
  * - fuelType: ประเภทน้ำมัน (เช่น "95", "91", "E20", "B7", "ดีเซล")
  * 
  * ขั้นตอน:
- * 1. บันทึกรายงานลงใน memory
+ * 1. บันทึกรายงานลงฐานข้อมูล
  * 2. นับจำนวนรายงานสำหรับ station_id + fuel_type ภายใน 1 ชั่วโมงที่ผ่านมา
  * 3. ถ้าจำนวน >= threshold (3) ให้อัปเดตสถานะน้ำมันเป็น "หมด"
  * 
@@ -46,20 +43,14 @@ export async function POST(request: NextRequest) {
     // ตรวจสอบว่า IP นี้เคยรายงานปั๊ม+น้ำมันนี้ในชั่วโมงที่ผ่านมาหรือยัง
     const oneHourAgo = new Date(Date.now() - REPORT_WINDOW_HOURS * 60 * 60 * 1000);
     
-    // ล้างรายงานเก่ากว่า 24 ชั่วโมง
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const oldReportIndex = reportsStore.findIndex(r => r.reportedAt < twentyFourHoursAgo);
-    if (oldReportIndex > -1) {
-      reportsStore.splice(0, oldReportIndex + 1);
-    }
-
-    // ตรวจสอบว่าเคยรายงานหรือยัง
-    const existingReport = reportsStore.find(
-      r => r.stationId === stationId && 
-           r.fuelType === fuelType && 
-           r.userIp === userIp && 
-           r.reportedAt >= oneHourAgo
-    );
+    const existingReport = await db.fuelReport.findFirst({
+      where: {
+        stationId,
+        fuelType,
+        userIp,
+        reportedAt: { gte: oneHourAgo }
+      }
+    });
 
     if (existingReport) {
       return NextResponse.json(
@@ -69,20 +60,22 @@ export async function POST(request: NextRequest) {
     }
 
     // บันทึกรายงานใหม่
-    const newReport = {
-      stationId,
-      fuelType,
-      userIp,
-      reportedAt: new Date()
-    };
-    reportsStore.push(newReport);
+    await db.fuelReport.create({
+      data: {
+        stationId,
+        fuelType,
+        userIp,
+      }
+    });
 
     // นับจำนวนรายงานทั้งหมดสำหรับปั๊ม+น้ำมันนี้ภายในช่วงเวลาที่กำหนด
-    const reportCount = reportsStore.filter(
-      r => r.stationId === stationId && 
-           r.fuelType === fuelType && 
-           r.reportedAt >= oneHourAgo
-    ).length;
+    const reportCount = await db.fuelReport.count({
+      where: {
+        stationId,
+        fuelType,
+        reportedAt: { gte: oneHourAgo }
+      }
+    });
 
     // LOGIC การตรวจสอบ THRESHOLD:
     // ถ้ามี 3 รายงานขึ้นไปจากผู้ใช้ต่างคนภายใน 1 ชั่วโมง
@@ -90,21 +83,23 @@ export async function POST(request: NextRequest) {
     // วิธีนี้ป้องกันรายงานเท็จจากคนเดียวส่งผลต่อสถานะ
     if (reportCount >= REPORT_THRESHOLD) {
       // อัปเดตหรือสร้างสถานะน้ำมันของปั๊ม
-      const existing = outOfStockStore.get(stationId);
-      
-      if (existing) {
-        if (!existing.fuelTypes.includes(fuelType)) {
-          existing.fuelTypes.push(fuelType);
+      await db.stationFuelStatus.upsert({
+        where: {
+          stationId_fuelType: {
+            stationId,
+            fuelType
+          }
+        },
+        update: {
+          isEmpty: true,
+          lastUpdated: new Date()
+        },
+        create: {
+          stationId,
+          fuelType,
+          isEmpty: true
         }
-        existing.lastUpdated = new Date();
-        existing.reports.push({ fuelType, timestamp: new Date() });
-      } else {
-        outOfStockStore.set(stationId, {
-          fuelTypes: [fuelType],
-          lastUpdated: new Date(),
-          reports: [{ fuelType, timestamp: new Date() }]
-        });
-      }
+      });
 
       return NextResponse.json({
         success: true,
