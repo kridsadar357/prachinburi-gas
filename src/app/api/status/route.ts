@@ -1,72 +1,93 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+
+// Fallback in-memory storage เมื่อ database ไม่พร้อม
+let memoryStore: { stationId: string; fuelTypes: string[]; lastUpdated: Date }[] = [];
 
 /**
  * GET /api/status
  * 
  * ส่งคืนรายการน้ำมันที่หมดทั้งหมดในแต่ละปั๊ม
- * ใช้โดย Frontend เพื่อแสดงการแจ้งเตือนบนแผนที่
- * 
- * ล้างสถานะที่หมดอายุ (เก่ากว่า 24 ชั่วโมง) อัตโนมัติ
- * ทำให้ปั๊มสามารถ "กลับมา" จากการหมดชั่วคราวได้
  */
 export async function GET() {
   try {
-    // ล้างสถานะเก่า (เก่ากว่า 24 ชั่วโมง)
-    // ทำให้ปั๊มสามารถกลับมาพร้อมบริการได้หลังจากแจ้งว่าหมดไปแล้ว
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    // ลองใช้ database
+    const { db } = await import('@/lib/db');
     
-    await db.stationFuelStatus.deleteMany({
-      where: {
-        isEmpty: true,
-        lastUpdated: { lt: twentyFourHoursAgo }
-      }
-    });
-
-    // ดึงสถานะน้ำมันหมดทั้งหมด
-    const outOfStockStatuses = await db.stationFuelStatus.findMany({
-      where: {
-        isEmpty: true
-      },
-      select: {
-        stationId: true,
-        fuelType: true,
-        lastUpdated: true
-      }
-    });
-
-    // จัดกลุ่มตามรหัสปั๊มเพื่อให้ Frontend ประมวลผลง่ายขึ้น
-    const statusMap: Record<string, { fuelTypes: string[], lastUpdated: string }[]> = {};
-    
-    for (const status of outOfStockStatuses) {
-      if (!statusMap[status.stationId]) {
-        statusMap[status.stationId] = [];
-      }
+    try {
+      // ล้างสถานะเก่า (เก่ากว่า 24 ชั่วโมง)
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
       
-      // ตรวจสอบว่ามี entry สำหรับน้ำมันชนิดนี้แล้วหรือยัง
-      const existingEntry = statusMap[status.stationId].find(
-        e => e.fuelTypes.includes(status.fuelType)
-      );
+      await db.stationFuelStatus.deleteMany({
+        where: {
+          isEmpty: true,
+          lastUpdated: { lt: twentyFourHoursAgo }
+        }
+      });
+
+      // ดึงสถานะน้ำมันหมดทั้งหมด
+      const outOfStockStatuses = await db.stationFuelStatus.findMany({
+        where: {
+          isEmpty: true
+        },
+        select: {
+          stationId: true,
+          fuelType: true,
+          lastUpdated: true
+        }
+      });
+
+      // จัดกลุ่มตามรหัสปั๊ม
+      const statusMap: Record<string, string[]> = {};
+      const lastUpdatedMap: Record<string, Date> = {};
       
-      if (!existingEntry) {
-        statusMap[status.stationId].push({
-          fuelTypes: [status.fuelType],
-          lastUpdated: status.lastUpdated.toISOString()
-        });
+      for (const status of outOfStockStatuses) {
+        if (!statusMap[status.stationId]) {
+          statusMap[status.stationId] = [];
+          lastUpdatedMap[status.stationId] = status.lastUpdated;
+        }
+        if (!statusMap[status.stationId].includes(status.fuelType)) {
+          statusMap[status.stationId].push(status.fuelType);
+        }
       }
+
+      const result = Object.entries(statusMap).map(([stationId, fuelTypes]) => ({
+        stationId,
+        outOfStock: fuelTypes,
+        lastUpdated: lastUpdatedMap[stationId]?.toISOString() || new Date().toISOString()
+      }));
+
+      return NextResponse.json(result);
+      
+    } catch (dbError) {
+      console.error('Database error, using memory fallback:', dbError);
+      // Fallback to memory store
+      return NextResponse.json(memoryStore.map(s => ({
+        stationId: s.stationId,
+        outOfStock: s.fuelTypes,
+        lastUpdated: s.lastUpdated.toISOString()
+      })));
     }
-
-    // แปลงเป็น array format สำหรับ Frontend
-    const result = Object.entries(statusMap).map(([stationId, statuses]) => ({
-      stationId,
-      outOfStock: statuses.flatMap(s => s.fuelTypes),
-      lastUpdated: statuses[0]?.lastUpdated || new Date().toISOString()
-    }));
-
-    return NextResponse.json(result);
+    
   } catch (error) {
     console.error('เกิดข้อผิดพลาดในการดึงสถานะ:', error);
-    // ส่งคืน empty array เพื่อป้องกัน frontend crash
+    // ส่งคืน empty array เสมอ
     return NextResponse.json([]);
+  }
+}
+
+// Export สำหรับใช้โดย report API
+export function updateMemoryStore(stationId: string, fuelType: string) {
+  const existing = memoryStore.find(s => s.stationId === stationId);
+  if (existing) {
+    if (!existing.fuelTypes.includes(fuelType)) {
+      existing.fuelTypes.push(fuelType);
+    }
+    existing.lastUpdated = new Date();
+  } else {
+    memoryStore.push({
+      stationId,
+      fuelTypes: [fuelType],
+      lastUpdated: new Date()
+    });
   }
 }
