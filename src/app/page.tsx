@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, CircleX, Eye, EyeOff, Fuel, MapPin, Navigati
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { OilAssistant3D } from '@/components/oil-assistant-3d';
 import { toast } from '@/hooks/use-toast';
 import { useTheme } from 'next-themes';
 
@@ -73,6 +74,24 @@ const BRAND_ASSET: Record<string, { label: string; logo: string }> = {
   ESSO: { label: 'Esso', logo: '/brands/esso.png' },
   OTHER: { label: 'Other', logo: '/brands/other.png' },
 };
+
+const FUEL_FILTER_OPTIONS: Array<{ key: string; label: string }> = [
+  { key: 'ALL', label: 'ทั้งหมด' },
+  { key: 'ดีเซล', label: 'ดีเซล' },
+  { key: 'B20', label: 'B20' },
+  { key: '95', label: 'แก๊สโซฮอล์ 95' },
+  { key: '91', label: 'แก๊สโซฮอล์ 91' },
+  { key: 'E20', label: 'E20' },
+  { key: 'E85', label: 'E85' },
+];
+
+const ASSISTANT_QUOTES = [
+  'เดินทางปลอดภัยนะครับ ออกไปข้างนอกอย่าลืมใส่หน้ากากกันฝุ่น PM 2.5 ด้วยนะ',
+  'เดินทางโดยสวัสดิภาพตลอดการเดินทางนะครับ',
+  'ขับขี่ปลอดภัย เดินทางราบรื่นนะครับ',
+  'ขอให้ถึงที่หมายอย่างปลอดภัย และดูแลสุขภาพจากฝุ่น PM 2.5 ด้วยการสวมหน้ากากเสมอนะครับ',
+  'ดูแลรักษาสุขภาพให้ดีนะครับ',
+];
 
 const DISTRICT_ALIAS: Record<string, string> = {
   'เมืองปราจีน': 'เมืองปราจีนบุรี',
@@ -316,6 +335,9 @@ export default function Home() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showAvailablePanel, setShowAvailablePanel] = useState(true);
   const [availableIndex, setAvailableIndex] = useState(0);
+  const [showFuelAssistant, setShowFuelAssistant] = useState(false);
+  const [selectedFuelFilter, setSelectedFuelFilter] = useState<string>('ALL');
+  const [assistantQuote, setAssistantQuote] = useState(ASSISTANT_QUOTES[0]);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
@@ -397,12 +419,16 @@ export default function Home() {
       ? stations.filter((station) => station.name.toLowerCase().includes(keyword))
       : stations;
 
-    if (!nearRangeKm || !userLocation) return byName;
-    return byName.filter((station) => {
+    const byDistance = !nearRangeKm || !userLocation
+      ? byName
+      : byName.filter((station) => {
       const d = distanceKm(userLocation.lat, userLocation.lng, station.lat, station.lng);
       return d <= nearRangeKm;
     });
-  }, [stations, search, nearRangeKm, userLocation]);
+
+    if (selectedFuelFilter === 'ALL') return byDistance;
+    return byDistance.filter((station) => station.fuelStatus[selectedFuelFilter] === 'available');
+  }, [stations, search, nearRangeKm, userLocation, selectedFuelFilter]);
 
   const suggestions = useMemo(() => {
     const keyword = search.trim().toLowerCase();
@@ -543,6 +569,22 @@ export default function Home() {
     setShowNearPanel(false);
   };
 
+  useEffect(() => {
+    if (showFuelAssistant || showNearPanel) return;
+
+    const timer = window.setInterval(() => {
+      setAssistantQuote((prev) => {
+        let next = prev;
+        while (next === prev) {
+          next = ASSISTANT_QUOTES[Math.floor(Math.random() * ASSISTANT_QUOTES.length)];
+        }
+        return next;
+      });
+    }, 7000);
+
+    return () => window.clearInterval(timer);
+  }, [showFuelAssistant, showNearPanel]);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <header className="fixed left-0 right-0 top-0 z-40 p-3 md:p-4">
@@ -648,6 +690,61 @@ export default function Home() {
           </MapContainer>
         )}
       </main>
+
+      <div className={`fixed left-5 z-50 transition-all ${showNearPanel ? 'bottom-32' : 'bottom-52'}`}>
+        {!showFuelAssistant && !showNearPanel && (
+          <div className="mb-2 max-w-[260px] rounded-xl border border-white/25 bg-white/20 px-3 py-2 text-[11px] leading-relaxed text-white shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-black/25">
+            {assistantQuote}
+          </div>
+        )}
+        <div>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="assistant-drop h-14 w-14 rounded-full border-0 bg-transparent p-0 text-white shadow-none hover:bg-transparent"
+            onClick={() => setShowFuelAssistant((v) => !v)}
+            aria-label="open fuel assistant"
+            title="ผู้ช่วยเลือกน้ำมัน"
+          >
+            <OilAssistant3D size={44} className="pointer-events-none" />
+          </Button>
+        </div>
+
+        {showFuelAssistant && (
+          <div className="mt-2 w-[210px] rounded-2xl border border-white/25 bg-white/20 p-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">ผู้ช่วยเลือกน้ำมัน</p>
+              <button
+                type="button"
+                className="rounded-md px-1 text-xs text-muted-foreground hover:bg-white/20"
+                onClick={() => setShowFuelAssistant(false)}
+              >
+                ปิด
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {FUEL_FILTER_OPTIONS.map((option) => (
+                <Button
+                  key={option.key}
+                  size="sm"
+                  variant="ghost"
+                  className={`h-8 rounded-lg border border-white/20 text-[11px] ${
+                    selectedFuelFilter === option.key
+                      ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                      : 'bg-black/80 text-white dark:bg-white/10 dark:hover:bg-white/20'
+                  }`}
+                  onClick={() => setSelectedFuelFilter(option.key)}
+                >
+                  {option.label}
+                </Button>
+              ))}
+            </div>
+            <p className="mt-2 text-[10px] text-muted-foreground">
+              แสดงเฉพาะสถานีที่มีน้ำมันชนิดที่เลือก (สถานะมีขาย)
+            </p>
+          </div>
+        )}
+      </div>
 
       <div className="fixed bottom-4 right-4 z-30">
         {showNearPanel && (
@@ -859,6 +956,24 @@ export default function Home() {
         }
         .leaflet-popup-tip {
           background: rgba(255, 255, 255, 0.88) !important;
+        }
+        .assistant-drop {
+          animation: assistantFloat 2.8s ease-in-out infinite;
+          transform-origin: center;
+        }
+        .assistant-drop svg {
+          animation: assistantWobble 3.1s ease-in-out infinite;
+          transform-origin: center;
+        }
+        @keyframes assistantFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-3px); }
+        }
+        @keyframes assistantWobble {
+          0%, 100% { transform: rotate(0deg) scale(1); }
+          25% { transform: rotate(-4deg) scale(1.02); }
+          50% { transform: rotate(0deg) scale(0.98); }
+          75% { transform: rotate(4deg) scale(1.02); }
         }
       `}</style>
     </div>
