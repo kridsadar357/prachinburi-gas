@@ -1,0 +1,639 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { CircleX, Fuel, MapPin, Navigation, RefreshCw, Search, Wifi, WifiOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { toast } from '@/hooks/use-toast';
+import { useTheme } from 'next-themes';
+
+import 'leaflet/dist/leaflet.css';
+
+interface Station {
+  id: string;
+  name: string;
+  brand: string;
+  address: string;
+  fuels: string[];
+  fuelStatus: Record<string, 'available' | 'limited' | 'out' | 'pending_delivery' | 'unknown'>;
+  lat: number;
+  lng: number;
+}
+
+interface ApiStation {
+  id: string;
+  name: string;
+  brandId: string;
+  lat: number;
+  lon: number;
+  province: string;
+  district: string | null;
+  latestReport?: {
+    diesel?: string;
+    dieselB20?: string;
+    benzineG95?: string;
+    benzineG91?: string;
+    benzineE20?: string;
+    benzineE85?: string;
+  };
+}
+
+interface ApiStationsResponse {
+  stations: ApiStation[];
+}
+
+const PRACHINBURI_CENTER = { lat: 14.0509, lng: 101.3689 };
+
+const FUEL_TYPES: Record<string, { label: string; color: string }> = {
+  '95': { label: 'แก๊สโซฮอล์ 95', color: 'bg-green-500' },
+  '91': { label: 'แก๊สโซฮอล์ 91', color: 'bg-blue-500' },
+  E20: { label: 'แก๊สโซฮอล์ E20', color: 'bg-yellow-500' },
+  E85: { label: 'แก๊สโซฮอล์ E85', color: 'bg-orange-500' },
+  B20: { label: 'ไบโอดีเซล B20', color: 'bg-amber-700' },
+  'ดีเซล': { label: 'ดีเซล', color: 'bg-gray-600' },
+};
+
+const FUEL_STATUS_LABEL: Record<string, string> = {
+  available: 'มีขาย',
+  limited: 'มีจำกัด',
+  out: 'หมด',
+  pending_delivery: 'กำลังเติม',
+  unknown: 'ไม่ทราบ',
+};
+
+const BRAND_ASSET: Record<string, { label: string; logo: string }> = {
+  PTT: { label: 'PTT', logo: '/brands/ptt.png' },
+  PT: { label: 'PT', logo: '/brands/pt.png' },
+  SHELL: { label: 'Shell', logo: '/brands/shell.png' },
+  BANGCHAK: { label: 'Bangchak', logo: '/brands/bangchak.png' },
+  CALTEX: { label: 'Caltex', logo: '/brands/caltex.png' },
+  ESSO: { label: 'Esso', logo: '/brands/esso.png' },
+  OTHER: { label: 'Other', logo: '/brands/other.png' },
+};
+
+const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
+const Circle = dynamic(() => import('react-leaflet').then((mod) => mod.Circle), { ssr: false });
+
+function distanceKm(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number
+) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng / 2) *
+    Math.sin(dLng / 2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function MarkersLayer({
+  stations,
+  userLocation,
+  nearRangeKm
+}: {
+  stations: Station[];
+  userLocation: { lat: number; lng: number } | null;
+  nearRangeKm: number | null;
+}) {
+  const [L, setL] = useState<any>(null);
+
+  useEffect(() => {
+    import('leaflet').then((mod) => setL(mod.default));
+  }, []);
+
+  const iconCache = useMemo(() => {
+    if (!L) return new Map<string, any>();
+    const cache = new Map<string, any>();
+    for (const brand of Object.keys(BRAND_ASSET)) {
+      for (const warning of ['0', '1']) {
+        const key = `${brand}-${warning}`;
+        const html = `
+          <div style="position:relative;transform:translate(-50%,-100%);">
+            <img src="${BRAND_ASSET[brand]?.logo || BRAND_ASSET.OTHER.logo}" style="width:34px;height:34px;border-radius:999px;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.35);" />
+            ${
+              warning === '1'
+                ? '<div style="position:absolute;top:-2px;right:-9px;width:14px;height:14px;background:#facc15;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:9px;color:#111">!</div>'
+                : ''
+            }
+          </div>
+        `;
+        cache.set(
+          key,
+          L.divIcon({
+            html,
+            className: 'brand-marker',
+            iconSize: [34, 42],
+            iconAnchor: [17, 42],
+          })
+        );
+      }
+    }
+    return cache;
+  }, [L]);
+
+  if (!L) return null;
+  const userIcon = L.divIcon({
+    html: `
+      <div style="position:relative;transform:translate(-50%,-50%);">
+        <div style="width:14px;height:14px;border-radius:999px;background:#2563eb;border:2px solid #fff;box-shadow:0 0 0 6px rgba(37,99,235,.2)"></div>
+      </div>
+    `,
+    className: 'user-location-marker',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
+
+  return (
+    <>
+      {stations.map((station) => {
+        const hasWarning = Object.values(station.fuelStatus).some((s) => s === 'out');
+        const icon = iconCache.get(`${station.brand}-${hasWarning ? '1' : '0'}`) || iconCache.get('OTHER-0');
+
+        return (
+          <Marker key={station.id} position={[station.lat, station.lng]} icon={icon}>
+            <Popup>
+              <div className="min-w-[220px] p-2">
+                <p className="text-sm font-semibold">{station.name}</p>
+                <p className="text-xs text-muted-foreground">{BRAND_ASSET[station.brand]?.label || 'Other'}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{station.address}</p>
+                {userLocation && (
+                  <p className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-300">
+                    ระยะทางจากคุณ: {distanceKm(userLocation.lat, userLocation.lng, station.lat, station.lng).toFixed(1)} กม.
+                  </p>
+                )}
+                <div className="mt-3 overflow-hidden rounded-lg border border-border/60">
+                  <table className="w-full border-collapse text-xs">
+                    <thead>
+                      <tr className="bg-muted/60">
+                        <th className="px-2 py-1.5 text-left font-medium text-foreground/80">ประเภทน้ำมัน</th>
+                        <th className="px-2 py-1.5 text-left font-medium text-foreground/80">สถานะ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {station.fuels.map((fuel) => {
+                        const status = station.fuelStatus[fuel] || 'unknown';
+                        const statusClass =
+                          status === 'out'
+                            ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
+                            : status === 'limited'
+                              ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+                              : status === 'available'
+                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
+                                : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+
+                        return (
+                          <tr key={fuel} className="border-t border-border/50">
+                            <td className="px-2 py-1.5">
+                              <span className="font-medium">{FUEL_TYPES[fuel]?.label || fuel}</span>
+                            </td>
+                            <td className="px-2 py-1.5">
+                              <span className={`inline-flex rounded-md px-1.5 py-0.5 font-medium ${statusClass}`}>
+                                {FUEL_STATUS_LABEL[status]}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+      {userLocation && (
+        <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
+          <Popup>
+            <div className="text-sm font-medium">ตำแหน่งของคุณ</div>
+          </Popup>
+        </Marker>
+      )}
+      {userLocation && nearRangeKm && (
+        <Circle
+          center={[userLocation.lat, userLocation.lng]}
+          radius={nearRangeKm * 1000}
+          pathOptions={{
+            color: '#10b981',
+            weight: 2,
+            fillColor: '#10b981',
+            fillOpacity: 0.12,
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+export default function Home() {
+  const [stations, setStations] = useState<Station[]>([]);
+  const [isOnline, setIsOnline] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
+  const [mapInstance, setMapInstance] = useState<any>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [search, setSearch] = useState('');
+  const [showNearPanel, setShowNearPanel] = useState(false);
+  const [nearRangeKm, setNearRangeKm] = useState<number | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+
+  const mapBrandId = (brandId: string): string => (BRAND_ASSET[brandId] ? brandId : 'OTHER');
+
+  const mapFuelStatus = (report?: ApiStation['latestReport']): Station['fuelStatus'] => ({
+    'ดีเซล': (report?.diesel as any) || 'unknown',
+    B20: (report?.dieselB20 as any) || 'unknown',
+    '95': (report?.benzineG95 as any) || 'unknown',
+    '91': (report?.benzineG91 as any) || 'unknown',
+    E20: (report?.benzineE20 as any) || 'unknown',
+    E85: (report?.benzineE85 as any) || 'unknown',
+  });
+
+  const fetchStations = async () => {
+    try {
+      const response = await fetch('/api/stations');
+      const data: ApiStationsResponse = await response.json();
+      const stationList: Station[] = (data.stations || [])
+        .map((station) => {
+          const fuelStatus = mapFuelStatus(station.latestReport);
+          const fuels = Object.keys(fuelStatus).filter((f) => fuelStatus[f] !== 'unknown');
+          return {
+            id: station.id,
+            name: station.name,
+            brand: mapBrandId(station.brandId),
+            address: `${station.district || '-'}, ${station.province}`,
+            fuels: fuels.length > 0 ? fuels : Object.keys(fuelStatus),
+            fuelStatus,
+            lat: station.lat,
+            lng: station.lon,
+          };
+        })
+        .filter((s) => Number.isFinite(s.lat) && Number.isFinite(s.lng));
+
+      setStations(stationList);
+    } catch (error) {
+      console.error('Failed to fetch stations:', error);
+      toast({
+        title: 'โหลดข้อมูลไม่สำเร็จ',
+        description: 'ไม่สามารถโหลดข้อมูลจาก API ได้',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchStations();
+    setMapReady(true);
+
+    // Cleanup stale service workers/caches in local development.
+    // This prevents old cached CSP/asset responses from breaking dev sessions.
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => {
+          registration.unregister().catch(() => undefined);
+        });
+      });
+
+      if ('caches' in window) {
+        caches.keys().then((keys) => {
+          keys
+            .filter((key) => key.startsWith('gas-finder-'))
+            .forEach((key) => {
+              caches.delete(key).catch(() => undefined);
+            });
+        });
+      }
+    }
+
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  const filteredStations = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+    const byName = keyword
+      ? stations.filter((station) => station.name.toLowerCase().includes(keyword))
+      : stations;
+
+    if (!nearRangeKm || !userLocation) return byName;
+    return byName.filter((station) => {
+      const d = distanceKm(userLocation.lat, userLocation.lng, station.lat, station.lng);
+      return d <= nearRangeKm;
+    });
+  }, [stations, search, nearRangeKm, userLocation]);
+
+  const suggestions = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+    if (!keyword) return [];
+    return stations
+      .filter((station) => station.name.toLowerCase().includes(keyword))
+      .slice(0, 5);
+  }, [stations, search]);
+
+  useEffect(() => {
+    if (!mapInstance || !userLocation || !nearRangeKm) return;
+    import('leaflet').then((leaflet) => {
+      const L = leaflet.default;
+      const center = L.latLng(userLocation.lat, userLocation.lng);
+      const bounds = center.toBounds(nearRangeKm * 1000 * 2);
+      mapInstance.fitBounds(bounds, { padding: [32, 32] });
+    });
+  }, [nearRangeKm, userLocation, mapInstance]);
+
+  const centerOnUser = async () => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = { lat: position.coords.latitude, lng: position.coords.longitude };
+        setUserLocation(location);
+        mapInstance?.setView([location.lat, location.lng], 16);
+      },
+      () =>
+        toast({
+          title: 'ไม่สามารถระบุตำแหน่ง',
+          description: 'กรุณาอนุญาตตำแหน่งในเบราว์เซอร์',
+          variant: 'destructive',
+        }),
+      { enableHighAccuracy: false, timeout: 8000 }
+    );
+  };
+
+  const zoomToStation = (station: Station) => {
+    mapInstance?.setView([station.lat, station.lng], 15);
+    setSearch(station.name);
+    setShowSuggestions(false);
+  };
+
+  const enableNearFilter = () => {
+    if (!userLocation) {
+      centerOnUser();
+    }
+    setNearRangeKm((prev) => prev ?? 10);
+    setShowNearPanel(true);
+  };
+
+  const clearNearFilter = () => {
+    setNearRangeKm(null);
+    setShowNearPanel(false);
+  };
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+      <header className="fixed left-0 right-0 top-0 z-40 p-3 md:p-4">
+        <div className="mx-auto max-w-6xl rounded-3xl border border-white/20 bg-white/20 px-3 py-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="shrink-0 rounded-2xl bg-emerald-600 p-2.5 text-white shadow-lg shadow-emerald-500/30">
+                <Fuel className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <h1 className="truncate text-lg font-semibold leading-tight">ค้นหาปั๊มน้ำมัน</h1>
+                <p className="truncate text-xs text-muted-foreground">ปราจีนบุรี ประเทศไทย</p>
+              </div>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <Badge
+                className="hidden rounded-full border border-white/20 bg-black/80 px-3 text-white dark:bg-white/10 sm:inline-flex"
+                variant={isOnline ? 'default' : 'destructive'}
+              >
+                {isOnline ? <Wifi className="mr-1 h-3 w-3" /> : <WifiOff className="mr-1 h-3 w-3" />}
+                {isOnline ? 'ออนไลน์' : 'ออฟไลน์'}
+              </Badge>
+              <ThemeToggle variant="glass" />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="rounded-xl border border-white/20 bg-white/15 text-foreground hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20"
+                onClick={fetchStations}
+                aria-label="refresh"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-3 flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                placeholder="ค้นหาชื่อสถานีบริการ..."
+                className="h-11 rounded-2xl border-white/20 bg-white/45 pl-9 text-sm shadow-inner dark:bg-white/10"
+              />
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-12 z-50 w-full overflow-hidden rounded-2xl border border-white/25 bg-white/85 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/85">
+                  {suggestions.map((station) => (
+                    <button
+                      key={station.id}
+                      type="button"
+                      onMouseDown={() => zoomToStation(station)}
+                      className="flex w-full items-center justify-between border-b border-border/40 px-3 py-2 text-left text-sm last:border-b-0 hover:bg-white/70 dark:hover:bg-white/10"
+                    >
+                      <span className="truncate font-medium">{station.name}</span>
+                      <span className="ml-3 text-xs text-muted-foreground">{BRAND_ASSET[station.brand]?.label || 'Other'}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <Badge
+              className="rounded-full border border-white/20 bg-black/80 px-3 text-white dark:bg-white/10 sm:hidden"
+              variant={isOnline ? 'default' : 'destructive'}
+            >
+              {isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}
+            </Badge>
+          </div>
+        </div>
+      </header>
+
+      <main className="absolute inset-0 z-0 pt-28 md:pt-32">
+        {mapReady && (
+          <MapContainer
+            center={[PRACHINBURI_CENTER.lat, PRACHINBURI_CENTER.lng]}
+            zoom={12}
+            className="h-full w-full"
+            zoomControl={false}
+            preferCanvas
+            zoomAnimation={false}
+            markerZoomAnimation={false}
+            ref={(ref: any) => setMapInstance(ref)}
+          >
+            <TileLayer
+              attribution='&copy; OpenStreetMap'
+              url={
+                isDark
+                  ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                  : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              }
+              updateWhenZooming={false}
+            />
+            <MarkersLayer stations={filteredStations} userLocation={userLocation} nearRangeKm={nearRangeKm} />
+          </MapContainer>
+        )}
+      </main>
+
+      <div className="fixed bottom-4 right-4 z-30">
+        {showNearPanel && (
+          <div className="mb-2 w-72 rounded-2xl border border-white/25 bg-white/20 p-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-sm font-semibold">ช่วงใกล้ฉัน</p>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-7 w-7 rounded-lg"
+                onClick={() => setShowNearPanel(false)}
+                aria-label="close near panel"
+              >
+                <CircleX className="h-4 w-4" />
+              </Button>
+            </div>
+            <p className="mb-2 text-xs text-muted-foreground">
+              {userLocation
+                ? 'กำลังแสดงปั๊มตามระยะทางจากตำแหน่งของคุณ'
+                : 'กดปุ่มตำแหน่งเพื่อเปิดระยะใกล้ฉันให้แม่นยำ'}
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-9 w-9 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                onClick={() => setNearRangeKm((v) => Math.max(1, (v ?? 10) - 1))}
+                aria-label="decrease range"
+              >
+                -
+              </Button>
+              <div className="min-w-20 text-center text-sm font-semibold">{nearRangeKm ?? 10} กม.</div>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-9 w-9 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                onClick={() => setNearRangeKm((v) => Math.min(100, (v ?? 10) + 1))}
+                aria-label="increase range"
+              >
+                +
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="ml-auto rounded-xl border border-white/20 bg-white/20 text-xs"
+                onClick={clearNearFilter}
+              >
+                ล้างระยะ
+              </Button>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={100}
+              value={nearRangeKm ?? 10}
+              onChange={(e) => setNearRangeKm(Number(e.target.value))}
+              className="mt-3 w-full accent-emerald-500"
+            />
+          </div>
+        )}
+        <div className="flex items-center gap-2 rounded-2xl border border-white/25 bg-white/20 p-2 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-11 w-11 rounded-xl bg-black/80 text-white hover:bg-black/90 dark:bg-white/10 dark:hover:bg-white/20"
+            onClick={() => mapInstance?.zoomIn()}
+            aria-label="zoom in"
+          >
+            +
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-11 w-11 rounded-xl bg-black/80 text-white hover:bg-black/90 dark:bg-white/10 dark:hover:bg-white/20"
+            onClick={() => mapInstance?.zoomOut()}
+            aria-label="zoom out"
+          >
+            -
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-11 w-11 rounded-xl bg-black/80 text-white hover:bg-black/90 dark:bg-white/10 dark:hover:bg-white/20"
+            onClick={centerOnUser}
+            aria-label="my location"
+          >
+            <Navigation className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`h-11 w-11 rounded-xl ${nearRangeKm ? 'bg-emerald-600 text-white' : 'bg-black/80 text-white dark:bg-white/10 dark:hover:bg-white/20'}`}
+            onClick={enableNearFilter}
+            aria-label="nearby range filter"
+            title="ใกล้ฉัน"
+          >
+            <MapPin className="h-4 w-4" />
+          </Button>
+          {nearRangeKm && (
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-11 w-11 rounded-xl bg-red-600/90 text-white hover:bg-red-600"
+              onClick={clearNearFilter}
+              aria-label="clear nearby range filter"
+              title="ล้างช่วงระยะ"
+            >
+              <CircleX className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <div className="fixed bottom-4 left-4 z-30 rounded-2xl border border-white/25 bg-white/20 px-3.5 py-2.5 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+        <div className="flex items-center gap-2.5">
+          <div className="rounded-lg bg-blue-500/20 p-1.5">
+            <MapPin className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+          </div>
+          <div>
+            <p className="text-base font-semibold leading-none">{filteredStations.length}</p>
+            <p className="text-[11px] text-muted-foreground">สถานีบริการ</p>
+          </div>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        .brand-marker {
+          background: transparent !important;
+          border: none !important;
+        }
+        .leaflet-container {
+          background: #0f172a;
+        }
+        .leaflet-popup-content-wrapper {
+          border-radius: 14px !important;
+          backdrop-filter: blur(12px);
+          background: rgba(255, 255, 255, 0.88);
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+      `}</style>
+    </div>
+  );
+}

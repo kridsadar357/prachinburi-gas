@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+// Station fuel status - tracks the current status of each fuel type at each station
+// Primary Key: (station_id, fuel_type)
+model StationFuelStatus {
+  stationId  String    @map("station_id")
+  fuelType   String    @map("fuel_type")
+  isEmpty    Boolean   @default(false) @map("is_empty")
+  lastUpdated DateTime @default(now()) @map("last_updated")
+
+  @@id([stationId, fuelType])
+  @@map("station_fuel_status")
+}
+
+// Fuel reports - crowdsourced reports from users
+// Used to track reports within the last hour for threshold checking
+model FuelReport {
+  id         String   @id @default(cuid())
+  stationId  String   @map("station_id")
+  fuelType   String   @map("fuel_type")
+  userIp     String   @map("user_ip")
+  reportedAt DateTime @default(now()) @map("reported_at")
+
+  @@index([stationId, fuelType, reportedAt])
+  @@map("fuel_reports")
+}
