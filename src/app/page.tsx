@@ -101,11 +101,13 @@ function distanceKm(
 function MarkersLayer({
   stations,
   userLocation,
-  nearRangeKm
+  nearRangeKm,
+  userAccuracyMeters,
 }: {
   stations: Station[];
   userLocation: { lat: number; lng: number } | null;
   nearRangeKm: number | null;
+  userAccuracyMeters: number | null;
 }) {
   const [L, setL] = useState<any>(null);
 
@@ -218,8 +220,25 @@ function MarkersLayer({
         <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
           <Popup>
             <div className="text-sm font-medium">ตำแหน่งของคุณ</div>
+            {userAccuracyMeters && (
+              <div className="mt-1 text-xs text-muted-foreground">
+                ความแม่นยำประมาณ ±{Math.round(userAccuracyMeters)} เมตร
+              </div>
+            )}
           </Popup>
         </Marker>
+      )}
+      {userLocation && userAccuracyMeters && (
+        <Circle
+          center={[userLocation.lat, userLocation.lng]}
+          radius={userAccuracyMeters}
+          pathOptions={{
+            color: '#2563eb',
+            weight: 1,
+            fillColor: '#3b82f6',
+            fillOpacity: 0.12,
+          }}
+        />
       )}
       {userLocation && nearRangeKm && (
         <Circle
@@ -243,6 +262,7 @@ export default function Home() {
   const [mapReady, setMapReady] = useState(false);
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [userAccuracyMeters, setUserAccuracyMeters] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [showNearPanel, setShowNearPanel] = useState(false);
   const [nearRangeKm, setNearRangeKm] = useState<number | null>(null);
@@ -360,19 +380,51 @@ export default function Home() {
 
   const centerOnUser = async () => {
     if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const location = { lat: position.coords.latitude, lng: position.coords.longitude };
-        setUserLocation(location);
-        mapInstance?.setView([location.lat, location.lng], 16);
-      },
-      () =>
+
+    const start = Date.now();
+    let best: GeolocationPosition | null = null;
+
+    const finish = () => {
+      if (!best) {
         toast({
           title: 'ไม่สามารถระบุตำแหน่ง',
           description: 'กรุณาอนุญาตตำแหน่งในเบราว์เซอร์',
           variant: 'destructive',
-        }),
-      { enableHighAccuracy: false, timeout: 8000 }
+        });
+        return;
+      }
+
+      const location = { lat: best.coords.latitude, lng: best.coords.longitude };
+      setUserLocation(location);
+      setUserAccuracyMeters(best.coords.accuracy || null);
+      mapInstance?.setView([location.lat, location.lng], 16);
+      toast({
+        title: 'อัปเดตตำแหน่งแล้ว',
+        description: `ความแม่นยำประมาณ ±${Math.round(best.coords.accuracy)} เมตร`,
+      });
+    };
+
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        if (!best || position.coords.accuracy < best.coords.accuracy) {
+          best = position;
+        }
+        const accurateEnough = position.coords.accuracy <= 40;
+        const timedOut = Date.now() - start > 8000;
+        if (accurateEnough || timedOut) {
+          navigator.geolocation.clearWatch(watchId);
+          finish();
+        }
+      },
+      () => {
+        navigator.geolocation.clearWatch(watchId);
+        finish();
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 10000,
+      }
     );
   };
 
@@ -489,7 +541,12 @@ export default function Home() {
               }
               updateWhenZooming={false}
             />
-            <MarkersLayer stations={filteredStations} userLocation={userLocation} nearRangeKm={nearRangeKm} />
+            <MarkersLayer
+              stations={filteredStations}
+              userLocation={userLocation}
+              nearRangeKm={nearRangeKm}
+              userAccuracyMeters={userAccuracyMeters}
+            />
           </MapContainer>
         )}
       </main>
