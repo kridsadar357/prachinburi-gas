@@ -2,9 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { CircleX, Fuel, MapPin, Navigation, RefreshCw, Search, Wifi, WifiOff } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CircleX, Eye, EyeOff, Fuel, MapPin, Navigation, RefreshCw, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { toast } from '@/hooks/use-toast';
@@ -21,6 +20,7 @@ interface Station {
   fuelStatus: Record<string, 'available' | 'limited' | 'out' | 'pending_delivery' | 'unknown'>;
   lat: number;
   lng: number;
+  district: string | null;
 }
 
 interface ApiStation {
@@ -74,6 +74,32 @@ const BRAND_ASSET: Record<string, { label: string; logo: string }> = {
   OTHER: { label: 'Other', logo: '/brands/other.png' },
 };
 
+const DISTRICT_ALIAS: Record<string, string> = {
+  'เมืองปราจีน': 'เมืองปราจีนบุรี',
+  'ปราจีน': 'เมืองปราจีนบุรี',
+  'ศรีมหาโพธิ': 'ศรีมหาโพธิ',
+  'ศรีมโหสถ': 'ศรีมโหสถ',
+  'กบินทร์': 'กบินทร์บุรี',
+  'อำเภอกบินทร์บุรี': 'กบินทร์บุรี',
+  'อำเภอเมืองปราจีนบุรี': 'เมืองปราจีนบุรี',
+};
+
+const INVALID_DISTRICTS = new Set(['ง', 'งเก่า', 'งโพรง', 'กสมบูรณ์', '-', '']);
+
+function normalizeDistrict(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const cleaned = raw
+    .replace(/^อำเภอ/, '')
+    .replace(/^อ\./, '')
+    .replace(/^เขต/, '')
+    .trim();
+
+  if (INVALID_DISTRICTS.has(cleaned)) return null;
+  if (DISTRICT_ALIAS[cleaned]) return DISTRICT_ALIAS[cleaned];
+  if (cleaned.length < 3) return null;
+  return cleaned;
+}
+
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
 const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
@@ -103,11 +129,13 @@ function MarkersLayer({
   userLocation,
   nearRangeKm,
   userAccuracyMeters,
+  onNavigate,
 }: {
   stations: Station[];
   userLocation: { lat: number; lng: number } | null;
   nearRangeKm: number | null;
   userAccuracyMeters: number | null;
+  onNavigate: (station: Station) => void;
 }) {
   const [L, setL] = useState<any>(null);
 
@@ -161,26 +189,36 @@ function MarkersLayer({
     <>
       {stations.map((station) => {
         const hasWarning = Object.values(station.fuelStatus).some((s) => s === 'out');
+        const hasAvailableFuel = Object.values(station.fuelStatus).some((s) => s === 'available');
         const icon = iconCache.get(`${station.brand}-${hasWarning ? '1' : '0'}`) || iconCache.get('OTHER-0');
 
         return (
           <Marker key={station.id} position={[station.lat, station.lng]} icon={icon}>
             <Popup>
-              <div className="min-w-[220px] p-2">
-                <p className="text-sm font-semibold">{station.name}</p>
-                <p className="text-xs text-muted-foreground">{BRAND_ASSET[station.brand]?.label || 'Other'}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{station.address}</p>
+              <div className="min-w-[280px] overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-white/95 via-white/90 to-white/85 p-3 text-slate-900 shadow-2xl backdrop-blur-xl">
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-xl font-bold tracking-tight">{station.name}</p>
+                    <p className="mt-0.5 text-sm font-medium text-slate-500">{BRAND_ASSET[station.brand]?.label || 'Other'}</p>
+                    <p className="mt-1 truncate text-xs text-slate-400">{station.address}</p>
+                  </div>
+                  <img
+                    src={BRAND_ASSET[station.brand]?.logo || BRAND_ASSET.OTHER.logo}
+                    alt={BRAND_ASSET[station.brand]?.label || 'Other'}
+                    className="h-10 w-10 shrink-0 rounded-full border-2 border-white shadow-lg"
+                  />
+                </div>
                 {userLocation && (
-                  <p className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-300">
+                  <p className="mb-3 rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-600">
                     ระยะทางจากคุณ: {distanceKm(userLocation.lat, userLocation.lng, station.lat, station.lng).toFixed(1)} กม.
                   </p>
                 )}
-                <div className="mt-3 overflow-hidden rounded-lg border border-border/60">
+                <div className="overflow-hidden rounded-xl border border-slate-200/80 shadow-sm">
                   <table className="w-full border-collapse text-xs">
                     <thead>
-                      <tr className="bg-muted/60">
-                        <th className="px-2 py-1.5 text-left font-medium text-foreground/80">ประเภทน้ำมัน</th>
-                        <th className="px-2 py-1.5 text-left font-medium text-foreground/80">สถานะ</th>
+                      <tr className="bg-gradient-to-r from-slate-700 to-slate-600 text-white">
+                        <th className="px-3 py-2 text-left text-xs font-semibold">ประเภทน้ำมัน</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">สถานะ</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -196,12 +234,12 @@ function MarkersLayer({
                                 : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
 
                         return (
-                          <tr key={fuel} className="border-t border-border/50">
-                            <td className="px-2 py-1.5">
-                              <span className="font-medium">{FUEL_TYPES[fuel]?.label || fuel}</span>
+                          <tr key={fuel} className="border-t border-slate-100 bg-white/70">
+                            <td className="px-3 py-2">
+                              <span className="font-semibold text-slate-700">{FUEL_TYPES[fuel]?.label || fuel}</span>
                             </td>
-                            <td className="px-2 py-1.5">
-                              <span className={`inline-flex rounded-md px-1.5 py-0.5 font-medium ${statusClass}`}>
+                            <td className="px-3 py-2">
+                              <span className={`inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusClass}`}>
                                 {FUEL_STATUS_LABEL[status]}
                               </span>
                             </td>
@@ -211,6 +249,16 @@ function MarkersLayer({
                     </tbody>
                   </table>
                 </div>
+                {hasAvailableFuel && (
+                  <Button
+                    size="sm"
+                    className="mt-4 h-11 w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 hover:from-emerald-600 hover:to-emerald-700"
+                    onClick={() => onNavigate(station)}
+                  >
+                    <Navigation className="mr-1 h-4 w-4" />
+                    นำทางไปสถานีนี้
+                  </Button>
+                )}
               </div>
             </Popup>
           </Marker>
@@ -258,7 +306,6 @@ function MarkersLayer({
 
 export default function Home() {
   const [stations, setStations] = useState<Station[]>([]);
-  const [isOnline, setIsOnline] = useState(true);
   const [mapReady, setMapReady] = useState(false);
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -267,6 +314,8 @@ export default function Home() {
   const [showNearPanel, setShowNearPanel] = useState(false);
   const [nearRangeKm, setNearRangeKm] = useState<number | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showAvailablePanel, setShowAvailablePanel] = useState(true);
+  const [availableIndex, setAvailableIndex] = useState(0);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
@@ -293,11 +342,12 @@ export default function Home() {
             id: station.id,
             name: station.name,
             brand: mapBrandId(station.brandId),
-            address: `${station.district || '-'}, ${station.province}`,
+            address: `${normalizeDistrict(station.district) || '-'}, ${station.province}`,
             fuels: fuels.length > 0 ? fuels : Object.keys(fuelStatus),
             fuelStatus,
             lat: station.lat,
             lng: station.lon,
+            district: normalizeDistrict(station.district),
           };
         })
         .filter((s) => Number.isFinite(s.lat) && Number.isFinite(s.lng));
@@ -337,13 +387,7 @@ export default function Home() {
       }
     }
 
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
@@ -367,6 +411,20 @@ export default function Home() {
       .filter((station) => station.name.toLowerCase().includes(keyword))
       .slice(0, 5);
   }, [stations, search]);
+
+  const availableStations = useMemo(() => {
+    return filteredStations.filter((station) =>
+      Object.values(station.fuelStatus).some((status) => status === 'available')
+    );
+  }, [filteredStations]);
+
+  useEffect(() => {
+    if (availableStations.length === 0) {
+      setAvailableIndex(0);
+      return;
+    }
+    setAvailableIndex((prev) => Math.min(prev, availableStations.length - 1));
+  }, [availableStations]);
 
   useEffect(() => {
     if (!mapInstance || !userLocation || !nearRangeKm) return;
@@ -434,12 +492,50 @@ export default function Home() {
     setShowSuggestions(false);
   };
 
+  const focusAvailableStation = (nextIndex: number) => {
+    if (availableStations.length === 0) return;
+    const normalized = (nextIndex + availableStations.length) % availableStations.length;
+    setAvailableIndex(normalized);
+    const station = availableStations[normalized];
+    mapInstance?.setView([station.lat, station.lng], 14);
+  };
+
+  const navigateToStation = (station: Station) => {
+    const openMap = (origin?: { lat: number; lng: number }) => {
+      const destination = `${station.lat},${station.lng}`;
+      const originParam = origin ? `&origin=${origin.lat},${origin.lng}` : '';
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}${originParam}&travelmode=driving`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
+
+    if (userLocation) {
+      openMap(userLocation);
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      openMap();
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+        setUserLocation(origin);
+        openMap(origin);
+      },
+      () => openMap(),
+      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+    );
+  };
+
   const enableNearFilter = () => {
     if (!userLocation) {
       centerOnUser();
     }
     setNearRangeKm((prev) => prev ?? 10);
     setShowNearPanel(true);
+    setShowAvailablePanel(false);
   };
 
   const clearNearFilter = () => {
@@ -463,13 +559,6 @@ export default function Home() {
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
-              <Badge
-                className="hidden rounded-full border border-white/20 bg-black/80 px-3 text-white dark:bg-white/10 sm:inline-flex"
-                variant={isOnline ? 'default' : 'destructive'}
-              >
-                {isOnline ? <Wifi className="mr-1 h-3 w-3" /> : <WifiOff className="mr-1 h-3 w-3" />}
-                {isOnline ? 'ออนไลน์' : 'ออฟไลน์'}
-              </Badge>
               <ThemeToggle variant="glass" />
               <Button
                 size="icon"
@@ -494,6 +583,20 @@ export default function Home() {
                 placeholder="ค้นหาชื่อสถานีบริการ..."
                 className="h-11 rounded-2xl border-white/20 bg-white/45 pl-9 text-sm shadow-inner dark:bg-white/10"
               />
+              {search.trim().length > 0 && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 rounded-lg"
+                  onClick={() => {
+                    setSearch('');
+                    setShowSuggestions(false);
+                  }}
+                  aria-label="clear search input"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
               {showSuggestions && suggestions.length > 0 && (
                 <div className="absolute top-12 z-50 w-full overflow-hidden rounded-2xl border border-white/25 bg-white/85 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/85">
                   {suggestions.map((station) => (
@@ -510,12 +613,6 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <Badge
-              className="rounded-full border border-white/20 bg-black/80 px-3 text-white dark:bg-white/10 sm:hidden"
-              variant={isOnline ? 'default' : 'destructive'}
-            >
-              {isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}
-            </Badge>
           </div>
         </div>
       </header>
@@ -546,6 +643,7 @@ export default function Home() {
               userLocation={userLocation}
               nearRangeKm={nearRangeKm}
               userAccuracyMeters={userAccuracyMeters}
+              onNavigate={navigateToStation}
             />
           </MapContainer>
         )}
@@ -553,7 +651,7 @@ export default function Home() {
 
       <div className="fixed bottom-4 right-4 z-30">
         {showNearPanel && (
-          <div className="mb-2 w-72 rounded-2xl border border-white/25 bg-white/20 p-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+          <div className="mb-3 w-[220px] rounded-2xl border border-white/25 bg-white/20 p-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-sm font-semibold">ช่วงใกล้ฉัน</p>
               <Button
@@ -591,15 +689,15 @@ export default function Home() {
               >
                 +
               </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="ml-auto rounded-xl border border-white/20 bg-white/20 text-xs"
-                onClick={clearNearFilter}
-              >
-                ล้างระยะ
-              </Button>
             </div>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="mt-2 w-full rounded-xl border border-white/20 bg-white/20 text-xs"
+              onClick={clearNearFilter}
+            >
+              ล้างระยะ
+            </Button>
             <input
               type="range"
               min={1}
@@ -663,6 +761,70 @@ export default function Home() {
         </div>
       </div>
 
+      {!showNearPanel && (
+      <div className="fixed bottom-28 left-1/2 z-30 w-[min(92vw,540px)] -translate-x-1/2 transition-all">
+        <div className="rounded-2xl border border-white/25 bg-white/25 p-2 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+          <div className="mb-2 flex items-center justify-between px-2">
+            <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+              สถานีที่มีน้ำมันขาย ({availableStations.length})
+            </div>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-7 w-7 rounded-lg"
+              onClick={() => setShowAvailablePanel((v) => !v)}
+              aria-label="toggle available stations slider"
+            >
+              {showAvailablePanel ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </Button>
+          </div>
+
+          {showAvailablePanel && (
+            <>
+              {availableStations.length > 0 ? (
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-10 w-10 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                    onClick={() => focusAvailableStation(availableIndex - 1)}
+                    aria-label="previous available station"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+
+                  <button
+                    type="button"
+                    onClick={() => zoomToStation(availableStations[availableIndex])}
+                    className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white/50 px-3 py-2 text-left hover:bg-white/70 dark:bg-white/10 dark:hover:bg-white/20"
+                  >
+                    <p className="truncate text-sm font-semibold">{availableStations[availableIndex]?.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {availableStations[availableIndex]?.address}
+                    </p>
+                  </button>
+
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-10 w-10 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                    onClick={() => focusAvailableStation(availableIndex + 1)}
+                    aria-label="next available station"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="rounded-xl border border-white/20 bg-white/40 px-3 py-2 text-xs text-muted-foreground dark:bg-white/5">
+                  ไม่พบสถานีที่มีสถานะ &quot;มีขาย&quot; ตามเงื่อนไขค้นหาปัจจุบัน
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+      )}
+
       <div className="fixed bottom-4 left-4 z-30 rounded-2xl border border-white/25 bg-white/20 px-3.5 py-2.5 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
         <div className="flex items-center gap-2.5">
           <div className="rounded-lg bg-blue-500/20 p-1.5">
@@ -684,11 +846,19 @@ export default function Home() {
           background: #0f172a;
         }
         .leaflet-popup-content-wrapper {
-          border-radius: 14px !important;
-          backdrop-filter: blur(12px);
-          background: rgba(255, 255, 255, 0.88);
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+          border-radius: 18px !important;
+          backdrop-filter: blur(16px);
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+          padding: 0 !important;
+        }
+        .leaflet-popup-content {
+          margin: 0 !important;
+          min-width: 280px;
+        }
+        .leaflet-popup-tip {
+          background: rgba(255, 255, 255, 0.88) !important;
         }
       `}</style>
     </div>
