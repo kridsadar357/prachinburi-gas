@@ -1,172 +1,175 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { updateMemoryStore } from '../status/route';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
-// Threshold: จำนวนรายงานที่ต้องการภายใน 1 ชั่วโมง
+import { db } from "@/lib/db";
+
+const MAX_REPORT_DISTANCE_METERS = 200;
+const REPORT_WINDOW_MS = 60 * 60 * 1000;
 const REPORT_THRESHOLD = 3;
-const REPORT_WINDOW_HOURS = 1;
+const RECOVERY_WINDOW_MS = 24 * 60 * 60 * 1000;
 
-// Fallback in-memory storage
-const memoryReports: { stationId: string; fuelType: string; userIp: string; reportedAt: Date }[] = [];
+const ReportSchema = z.object({
+  stationId: z.string().min(1),
+  fuelType: z.string().min(1),
+  userLat: z.number().min(-90).max(90),
+  userLng: z.number().min(-180).max(180),
+});
 
-/**
- * POST /api/report
- * 
- * รับรายงานน้ำมันหมดจากผู้ใช้
- */
-export async function POST(request: NextRequest) {
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("x-real-ip") || "unknown";
+}
+
+function haversineMeters(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
+  const R = 6371e3;
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
-    const { stationId, fuelType } = body;
-
-    // ตรวจสอบข้อมูลที่จำเป็น
-    if (!stationId || !fuelType) {
+    const body = await req.json();
+    const parsed = ReportSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'กรุณาระบุ stationId และ fuelType' },
+        { error: "Invalid request payload." },
         { status: 400 }
       );
     }
 
-    // ดึง IP ของผู้ใช้
-    const userIp = request.headers.get('x-forwarded-for') || 
-                   request.headers.get('x-real-ip') || 
-                   'unknown';
+    const { stationId, fuelType, userLat, userLng } = parsed.data;
+    const clientIp = getClientIp(req);
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - REPORT_WINDOW_MS);
+    const recoveryCutoff = new Date(now.getTime() - RECOVERY_WINDOW_MS);
 
-    const oneHourAgo = new Date(Date.now() - REPORT_WINDOW_HOURS * 60 * 60 * 1000);
+    await db.stationFuelStatus.deleteMany({
+      where: {
+        isEmpty: true,
+        lastUpdated: { lt: recoveryCutoff },
+      },
+    });
 
-    // ลองใช้ database
-    try {
-      const { db } = await import('@/lib/db');
-      
-      // ตรวจสอบว่าเคยรายงานหรือยัง
-      const existingReport = await db.fuelReport.findFirst({
-        where: {
-          stationId,
-          fuelType,
-          userIp,
-          reportedAt: { gte: oneHourAgo }
-        }
-      });
+    const station = await db.station.findUnique({
+      where: { id: stationId },
+      select: { id: true, lat: true, lon: true, latestReport: true },
+    });
 
-      if (existingReport) {
-        return NextResponse.json(
-          { error: 'คุณได้รายงานน้ำมันชนิดนี้ที่ปั๊มนี้ไปแล้วในช่วงเวลาใกล้เคียง' },
-          { status: 429 }
-        );
-      }
-
-      // บันทึกรายงานใหม่
-      await db.fuelReport.create({
-        data: {
-          stationId,
-          fuelType,
-          userIp,
-        }
-      });
-
-      // นับจำนวนรายงาน
-      const reportCount = await db.fuelReport.count({
-        where: {
-          stationId,
-          fuelType,
-          reportedAt: { gte: oneHourAgo }
-        }
-      });
-
-      // ตรวจสอบ threshold
-      if (reportCount >= REPORT_THRESHOLD) {
-        await db.stationFuelStatus.upsert({
-          where: {
-            stationId_fuelType: {
-              stationId,
-              fuelType
-            }
-          },
-          update: {
-            isEmpty: true,
-            lastUpdated: new Date()
-          },
-          create: {
-            stationId,
-            fuelType,
-            isEmpty: true
-          }
-        });
-
-        return NextResponse.json({
-          success: true,
-          message: 'บันทึกรายงานแล้ว น้ำมันถูก标记ว่าหมดแล้ว',
-          thresholdReached: true,
-          reportCount
-        });
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: 'บันทึกรายงานสำเร็จ',
-        thresholdReached: false,
-        reportCount,
-        reportsNeeded: REPORT_THRESHOLD - reportCount
-      });
-
-    } catch (dbError) {
-      console.error('Database error, using memory fallback:', dbError);
-      
-      // Fallback to memory storage
-      // ตรวจสอบว่าเคยรายงานหรือยัง
-      const existingMemoryReport = memoryReports.find(
-        r => r.stationId === stationId && 
-             r.fuelType === fuelType && 
-             r.userIp === userIp && 
-             r.reportedAt >= oneHourAgo
-      );
-
-      if (existingMemoryReport) {
-        return NextResponse.json(
-          { error: 'คุณได้รายงานน้ำมันชนิดนี้ที่ปั๊มนี้ไปแล้วในช่วงเวลาใกล้เคียง' },
-          { status: 429 }
-        );
-      }
-
-      // บันทึกรายงานใหม่
-      memoryReports.push({
-        stationId,
-        fuelType,
-        userIp,
-        reportedAt: new Date()
-      });
-
-      // นับจำนวนรายงาน
-      const reportCount = memoryReports.filter(
-        r => r.stationId === stationId && 
-             r.fuelType === fuelType && 
-             r.reportedAt >= oneHourAgo
-      ).length;
-
-      // ตรวจสอบ threshold
-      if (reportCount >= REPORT_THRESHOLD) {
-        updateMemoryStore(stationId, fuelType);
-        
-        return NextResponse.json({
-          success: true,
-          message: 'บันทึกรายงานแล้ว น้ำมันถูก标记ว่าหมดแล้ว',
-          thresholdReached: true,
-          reportCount
-        });
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: 'บันทึกรายงานสำเร็จ',
-        thresholdReached: false,
-        reportCount,
-        reportsNeeded: REPORT_THRESHOLD - reportCount
-      });
+    if (!station) {
+      return NextResponse.json({ error: "Station not found." }, { status: 404 });
     }
 
-  } catch (error) {
-    console.error('เกิดข้อผิดพลาดในการประมวลผลรายงาน:', error);
+    const distance = haversineMeters(userLat, userLng, station.lat, station.lon);
+    if (distance > MAX_REPORT_DISTANCE_METERS) {
+      return NextResponse.json(
+        {
+          error:
+            "You must be within 200 meters of this station to submit a report.",
+        },
+        { status: 403 }
+      );
+    }
+
+    const latestReport =
+      station.latestReport && typeof station.latestReport === "object"
+        ? (station.latestReport as Record<string, boolean>)
+        : {};
+    const knownFuelTypes = new Set(Object.keys(latestReport));
+    if (knownFuelTypes.size > 0 && !knownFuelTypes.has(fuelType)) {
+      return NextResponse.json(
+        { error: "Fuel type is not valid for this station." },
+        { status: 400 }
+      );
+    }
+
+    const existing = await db.fuelReport.findFirst({
+      where: {
+        stationId,
+        fuelType,
+        userIp: clientIp,
+        reportedAt: { gte: oneHourAgo },
+      },
+    });
+
+    if (existing) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "You already reported this fuel recently. Please try later.",
+        },
+        { status: 429 }
+      );
+    }
+
+    await db.fuelReport.create({
+      data: {
+        stationId,
+        fuelType,
+        userIp: clientIp,
+        userLat,
+        userLng,
+      },
+    });
+
+    const reportCount = await db.fuelReport.count({
+      where: {
+        stationId,
+        fuelType,
+        reportedAt: { gte: oneHourAgo },
+      },
+    });
+
+    let markedOutOfStock = false;
+    if (reportCount >= REPORT_THRESHOLD) {
+      await db.stationFuelStatus.upsert({
+        where: {
+          stationId_fuelType: {
+            stationId,
+            fuelType,
+          },
+        },
+        update: {
+          isEmpty: true,
+          lastUpdated: now,
+        },
+        create: {
+          stationId,
+          fuelType,
+          isEmpty: true,
+          lastUpdated: now,
+        },
+      });
+      markedOutOfStock = true;
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: markedOutOfStock
+        ? "Report received. Fuel is now marked as out of stock."
+        : `Report received (${reportCount}/${REPORT_THRESHOLD}).`,
+      reportCount,
+      threshold: REPORT_THRESHOLD,
+      markedOutOfStock,
+      maxDistanceMeters: MAX_REPORT_DISTANCE_METERS,
+    });
+  } catch {
     return NextResponse.json(
-      { error: 'เกิดข้อผิดพลาดภายในระบบ' },
+      { error: "Failed to submit report." },
       { status: 500 }
     );
   }

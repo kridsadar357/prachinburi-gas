@@ -11,8 +11,24 @@ datasource db {
   directUrl = env("DIRECT_DATABASE_URL")
 }
 
-// Station fuel status - tracks the current status of each fuel type at each station
-// Primary Key: (station_id, fuel_type)
+model Station {
+  id           String   @id
+  name         String
+  brandId      String   @map("brand_id")
+  lat          Float
+  lon          Float
+  province     String
+  district     String?
+  latestReport Json?    @map("latest_report")
+  syncedAt     DateTime @default(now()) @map("synced_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([province, district])
+  @@map("stations")
+}
+
+// Tracks out-of-stock status by station and fuel type.
 model StationFuelStatus {
   stationId  String    @map("station_id")
   fuelType   String    @map("fuel_type")
@@ -23,15 +39,17 @@ model StationFuelStatus {
   @@map("station_fuel_status")
 }
 
-// Fuel reports - crowdsourced reports from users
-// Used to track reports within the last hour for threshold checking
+// Crowdsourced reports with IP-based anti-spam.
 model FuelReport {
   id         String   @id @default(cuid())
   stationId  String   @map("station_id")
   fuelType   String   @map("fuel_type")
   userIp     String   @map("user_ip")
+  userLat    Float    @map("user_lat")
+  userLng    Float    @map("user_lng")
   reportedAt DateTime @default(now()) @map("reported_at")
 
   @@index([stationId, fuelType, reportedAt])
+  @@index([stationId, fuelType, userIp, reportedAt])
   @@map("fuel_reports")
 }
