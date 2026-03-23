@@ -598,7 +598,7 @@ export default function Home() {
         }
         return next;
       });
-    }, 7000);
+    }, 20000);
 
     return () => window.clearInterval(timer);
   }, [showFuelAssistant, showNearPanel]);
@@ -712,12 +712,8 @@ export default function Home() {
 
       {!isMapPopupOpen && (
       <div className={`fixed left-5 z-50 transition-all ${showNearPanel ? 'bottom-32' : 'bottom-52'}`}>
-        {!showFuelAssistant && !showNearPanel && (
-          <div className="mb-2 max-w-[260px] rounded-xl border border-white/25 bg-white/20 px-3 py-2 text-[11px] leading-relaxed text-white shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-black/25">
-            {assistantQuote}
-          </div>
-        )}
-        <div>
+        <div className="flex items-end gap-2">
+          <div>
           <Button
             size="icon"
             variant="ghost"
@@ -728,6 +724,12 @@ export default function Home() {
           >
             <OilAssistant3D size={44} className="pointer-events-none" />
           </Button>
+          </div>
+          {!showFuelAssistant && !showNearPanel && (
+            <div className="max-w-[260px] rounded-xl border border-slate-300/70 bg-white/85 px-3 py-2 text-[11px] leading-relaxed text-slate-700 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-black/25 dark:text-white">
+              {assistantQuote}
+            </div>
+          )}
         </div>
 
         {showFuelAssistant && (
@@ -880,16 +882,16 @@ export default function Home() {
       </div>
 
       {!showNearPanel && (
-      <div className="fixed bottom-28 left-1/2 z-30 w-[min(92vw,540px)] -translate-x-1/2 transition-all">
-        <div className="rounded-2xl border border-white/25 bg-white/25 p-2 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
-          <div className="mb-2 flex items-center justify-between px-2">
-            <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+      <div className="fixed bottom-24 left-1/2 z-30 w-[min(88vw,500px)] -translate-x-1/2 transition-all">
+        <div className="rounded-2xl border border-white/25 bg-white/25 p-1.5 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+          <div className="mb-1.5 flex items-center justify-between px-1.5">
+            <div className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">
               สถานีที่มีน้ำมันขาย ({availableStations.length})
             </div>
             <Button
               size="icon"
               variant="ghost"
-              className="h-7 w-7 rounded-lg"
+              className="h-6 w-6 rounded-lg"
               onClick={() => setShowAvailablePanel((v) => !v)}
               aria-label="toggle available stations slider"
             >
@@ -900,11 +902,11 @@ export default function Home() {
           {showAvailablePanel && (
             <>
               {availableStations.length > 0 ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-10 w-10 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                    className="h-9 w-9 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
                     onClick={() => focusAvailableStation(availableIndex - 1)}
                     aria-label="previous available station"
                   >
@@ -914,10 +916,10 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => zoomToStation(availableStations[availableIndex])}
-                    className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white/50 px-3 py-2 text-left hover:bg-white/70 dark:bg-white/10 dark:hover:bg-white/20"
+                    className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white/50 px-2.5 py-1.5 text-left hover:bg-white/70 dark:bg-white/10 dark:hover:bg-white/20"
                   >
-                    <p className="truncate text-sm font-semibold">{availableStations[availableIndex]?.name}</p>
-                    <p className="truncate text-xs text-muted-foreground">
+                    <p className="truncate text-[15px] font-semibold">{availableStations[availableIndex]?.name}</p>
+                    <p className="truncate text-[11px] text-muted-foreground">
                       {availableStations[availableIndex]?.address}
                     </p>
                   </button>
@@ -925,7 +927,7 @@ export default function Home() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-10 w-10 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
+                    className="h-9 w-9 shrink-0 rounded-xl bg-black/80 text-white dark:bg-white/10"
                     onClick={() => focusAvailableStation(availableIndex + 1)}
                     aria-label="next available station"
                   >
@@ -933,7 +935,7 @@ export default function Home() {
                   </Button>
                 </div>
               ) : (
-                <div className="rounded-xl border border-white/20 bg-white/40 px-3 py-2 text-xs text-muted-foreground dark:bg-white/5">
+                <div className="rounded-xl border border-white/20 bg-white/40 px-3 py-1.5 text-[11px] text-muted-foreground dark:bg-white/5">
                   ไม่พบสถานีที่มีสถานะ &quot;มีขาย&quot; ตามเงื่อนไขค้นหาปัจจุบัน
                 </div>
               )}
