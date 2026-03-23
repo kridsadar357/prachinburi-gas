@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ChevronLeft, ChevronRight, CircleX, Eye, EyeOff, Fuel, MapPin, Navigation, RefreshCw, Search, X } from 'lucide-react';
+import { AlertTriangle, ChevronLeft, ChevronRight, CircleX, Eye, EyeOff, Fuel, MapPin, Navigation, RefreshCw, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -32,18 +32,12 @@ interface ApiStation {
   lon: number;
   province: string;
   district: string | null;
-  latestReport?: {
-    diesel?: string;
-    dieselB20?: string;
-    benzineG95?: string;
-    benzineG91?: string;
-    benzineE20?: string;
-    benzineE85?: string;
-  };
+  latestReport?: Record<string, boolean>;
 }
 
 interface ApiStationsResponse {
   stations: ApiStation[];
+  allowReport?: boolean;
 }
 
 const PRACHINBURI_CENTER = { lat: 14.0509, lng: 101.3689 };
@@ -149,6 +143,7 @@ function MarkersLayer({
   nearRangeKm,
   userAccuracyMeters,
   onNavigate,
+  onReport,
   onPopupVisibilityChange,
 }: {
   stations: Station[];
@@ -156,6 +151,7 @@ function MarkersLayer({
   nearRangeKm: number | null;
   userAccuracyMeters: number | null;
   onNavigate: (station: Station) => void;
+  onReport?: (station: Station) => void;
   onPopupVisibilityChange: (visible: boolean) => void;
 }) {
   const [L, setL] = useState<any>(null);
@@ -278,16 +274,29 @@ function MarkersLayer({
                     </tbody>
                   </table>
                 </div>
-                {hasAvailableFuel && (
-                  <Button
-                    size="sm"
-                    className="mt-4 h-11 w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 hover:from-emerald-600 hover:to-emerald-700"
-                    onClick={() => onNavigate(station)}
-                  >
-                    <Navigation className="mr-1 h-4 w-4" />
-                    นำทางไปสถานีนี้
-                  </Button>
-                )}
+                <div className="mt-4 grid gap-2">
+                  {hasAvailableFuel && (
+                    <Button
+                      size="sm"
+                      className="h-11 w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 hover:from-emerald-600 hover:to-emerald-700"
+                      onClick={() => onNavigate(station)}
+                    >
+                      <Navigation className="mr-1 h-4 w-4" />
+                      นำทางไปสถานีนี้
+                    </Button>
+                  )}
+                  {onReport && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-10 w-full rounded-xl border-red-300 bg-red-50 text-sm font-semibold text-red-700 hover:bg-red-100"
+                      onClick={() => onReport(station)}
+                    >
+                      <AlertTriangle className="mr-1 h-4 w-4" />
+                      แจ้งน้ำมันหมด
+                    </Button>
+                  )}
+                </div>
               </div>
             </Popup>
           </Marker>
@@ -356,19 +365,33 @@ export default function Home() {
   const [selectedFuelFilter, setSelectedFuelFilter] = useState<string>('ALL');
   const [assistantQuote, setAssistantQuote] = useState(ASSISTANT_QUOTES[0]);
   const [isMapPopupOpen, setIsMapPopupOpen] = useState(false);
+  const [allowReport, setAllowReport] = useState(false);
+  const [reportStation, setReportStation] = useState<Station | null>(null);
+  const [reportFuel, setReportFuel] = useState('ดีเซล');
+  const [submittingReport, setSubmittingReport] = useState(false);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
   const mapBrandId = (brandId: string): string => (BRAND_ASSET[brandId] ? brandId : 'OTHER');
 
-  const mapFuelStatus = (report?: ApiStation['latestReport']): Station['fuelStatus'] => ({
-    'ดีเซล': (report?.diesel as any) || 'unknown',
-    B20: (report?.dieselB20 as any) || 'unknown',
-    '95': (report?.benzineG95 as any) || 'unknown',
-    '91': (report?.benzineG91 as any) || 'unknown',
-    E20: (report?.benzineE20 as any) || 'unknown',
-    E85: (report?.benzineE85 as any) || 'unknown',
-  });
+  const mapFuelStatus = (report?: ApiStation['latestReport']): Station['fuelStatus'] => {
+    const result: Station['fuelStatus'] = {
+      'ดีเซล': 'unknown',
+      B20: 'unknown',
+      '95': 'unknown',
+      '91': 'unknown',
+      E20: 'unknown',
+      E85: 'unknown',
+    };
+
+    if (!report) return result;
+    for (const [fuel, available] of Object.entries(report)) {
+      if (fuel in result) {
+        result[fuel] = available ? 'available' : 'out';
+      }
+    }
+    return result;
+  };
 
   const fetchStations = async () => {
     try {
@@ -393,6 +416,7 @@ export default function Home() {
         .filter((s) => Number.isFinite(s.lat) && Number.isFinite(s.lng));
 
       setStations(stationList);
+      setAllowReport(Boolean(data.allowReport));
     } catch (error) {
       console.error('Failed to fetch stations:', error);
       toast({
@@ -573,6 +597,70 @@ export default function Home() {
     );
   };
 
+  const submitReport = async () => {
+    if (!reportStation || !reportFuel) return;
+    if (!navigator.geolocation) {
+      toast({
+        title: 'อุปกรณ์ไม่รองรับตำแหน่ง',
+        description: 'ไม่สามารถตรวจสอบตำแหน่งปัจจุบันได้',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setSubmittingReport(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const response = await fetch('/api/report', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              stationId: reportStation.id,
+              fuelType: reportFuel,
+              userLat: position.coords.latitude,
+              userLng: position.coords.longitude,
+            }),
+          });
+
+          const result = await response.json();
+          if (!response.ok) {
+            toast({
+              title: 'ส่งรายงานไม่สำเร็จ',
+              description: result?.error || result?.message || 'ไม่สามารถส่งรายงานได้',
+              variant: 'destructive',
+            });
+            return;
+          }
+
+          toast({
+            title: 'รับรายงานแล้ว',
+            description: result?.message || 'ขอบคุณสำหรับการแจ้งข้อมูล',
+          });
+          setReportStation(null);
+          fetchStations();
+        } catch {
+          toast({
+            title: 'ส่งรายงานไม่สำเร็จ',
+            description: 'เกิดข้อผิดพลาดระหว่างส่งข้อมูล',
+            variant: 'destructive',
+          });
+        } finally {
+          setSubmittingReport(false);
+        }
+      },
+      () => {
+        setSubmittingReport(false);
+        toast({
+          title: 'ไม่สามารถอ่านตำแหน่งปัจจุบัน',
+          description: 'กรุณาอนุญาตตำแหน่งเพื่อส่งรายงาน',
+          variant: 'destructive',
+        });
+      },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+    );
+  };
+
   const enableNearFilter = () => {
     if (!userLocation) {
       centerOnUser();
@@ -605,16 +693,19 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      <header className="fixed left-0 right-0 top-0 z-40 p-3 md:p-4">
-        <div className="mx-auto max-w-6xl rounded-3xl border border-white/20 bg-white/20 px-3 py-3 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
+      <header
+        className="fixed left-0 right-0 z-40 px-3 pb-2 pt-2 md:px-4 md:pt-3"
+        style={{ top: 'max(env(safe-area-inset-top), 8px)' }}
+      >
+        <div className="mx-auto max-w-6xl rounded-[28px] border border-white/20 bg-white/20 px-3 py-2.5 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="shrink-0 rounded-2xl bg-emerald-600 p-2.5 text-white shadow-lg shadow-emerald-500/30">
-                <Fuel className="h-5 w-5" />
+              <div className="shrink-0 rounded-2xl bg-emerald-600 p-2 text-white shadow-lg shadow-emerald-500/30">
+                <Fuel className="h-4 w-4" />
               </div>
               <div className="min-w-0">
-                <h1 className="truncate text-lg font-semibold leading-tight">ค้นหาปั๊มน้ำมัน</h1>
-                <p className="truncate text-xs text-muted-foreground">ปราจีนบุรี ประเทศไทย</p>
+                <h1 className="truncate text-base font-semibold leading-tight md:text-lg">ค้นหาปั๊มน้ำมัน</h1>
+                <p className="truncate text-[12px] text-muted-foreground md:text-xs">ปราจีนบุรี ประเทศไทย</p>
               </div>
             </div>
 
@@ -632,7 +723,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-2.5 flex items-center gap-2">
             <div className="relative flex-1">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -641,7 +732,7 @@ export default function Home() {
                 onFocus={() => setShowSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                 placeholder="ค้นหาชื่อสถานีบริการ..."
-                className="h-11 rounded-2xl border-white/20 bg-white/45 pl-9 text-sm shadow-inner dark:bg-white/10"
+                className="h-10 rounded-2xl border-white/20 bg-white/45 pl-9 text-sm shadow-inner dark:bg-white/10"
               />
               {search.trim().length > 0 && (
                 <Button
@@ -704,11 +795,55 @@ export default function Home() {
               nearRangeKm={nearRangeKm}
               userAccuracyMeters={userAccuracyMeters}
               onNavigate={navigateToStation}
+              onReport={allowReport ? (station) => {
+                setReportStation(station);
+                setReportFuel(station.fuels[0] || 'ดีเซล');
+              } : undefined}
               onPopupVisibilityChange={setIsMapPopupOpen}
             />
           </MapContainer>
         )}
       </main>
+
+      {reportStation && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/45 p-4">
+          <div className="w-full max-w-sm rounded-2xl border border-white/20 bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur-xl">
+            <h3 className="text-base font-semibold">แจ้งน้ำมันหมด</h3>
+            <p className="mt-1 text-xs text-slate-600">{reportStation.name}</p>
+            <p className="mt-1 text-[11px] text-slate-500">ต้องอยู่ในระยะ 200 เมตรจากสถานี</p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {reportStation.fuels.map((fuel) => (
+                <Button
+                  key={fuel}
+                  size="sm"
+                  variant="ghost"
+                  className={`h-9 rounded-lg border ${reportFuel === fuel ? 'border-red-500 bg-red-600 text-white hover:bg-red-700' : 'border-slate-200 bg-white hover:bg-slate-50'}`}
+                  onClick={() => setReportFuel(fuel)}
+                >
+                  {FUEL_TYPES[fuel]?.label || fuel}
+                </Button>
+              ))}
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <Button
+                variant="outline"
+                className="h-10 rounded-xl"
+                onClick={() => setReportStation(null)}
+                disabled={submittingReport}
+              >
+                ยกเลิก
+              </Button>
+              <Button
+                className="h-10 rounded-xl bg-red-600 text-white hover:bg-red-700"
+                onClick={submitReport}
+                disabled={submittingReport}
+              >
+                {submittingReport ? 'กำลังส่ง...' : 'ยืนยันรายงาน'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!isMapPopupOpen && (
       <div className={`fixed left-5 z-50 transition-all ${showNearPanel ? 'bottom-32' : 'bottom-52'}`}>
