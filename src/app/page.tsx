@@ -149,12 +149,14 @@ function MarkersLayer({
   nearRangeKm,
   userAccuracyMeters,
   onNavigate,
+  onPopupVisibilityChange,
 }: {
   stations: Station[];
   userLocation: { lat: number; lng: number } | null;
   nearRangeKm: number | null;
   userAccuracyMeters: number | null;
   onNavigate: (station: Station) => void;
+  onPopupVisibilityChange: (visible: boolean) => void;
 }) {
   const [L, setL] = useState<any>(null);
 
@@ -212,7 +214,15 @@ function MarkersLayer({
         const icon = iconCache.get(`${station.brand}-${hasWarning ? '1' : '0'}`) || iconCache.get('OTHER-0');
 
         return (
-          <Marker key={station.id} position={[station.lat, station.lng]} icon={icon}>
+          <Marker
+            key={station.id}
+            position={[station.lat, station.lng]}
+            icon={icon}
+            eventHandlers={{
+              popupopen: () => onPopupVisibilityChange(true),
+              popupclose: () => onPopupVisibilityChange(false),
+            }}
+          >
             <Popup>
               <div className="min-w-[280px] overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-white/95 via-white/90 to-white/85 p-3 text-slate-900 shadow-2xl backdrop-blur-xl">
                 <div className="mb-3 flex items-start justify-between gap-3">
@@ -284,7 +294,14 @@ function MarkersLayer({
         );
       })}
       {userLocation && (
-        <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
+        <Marker
+          position={[userLocation.lat, userLocation.lng]}
+          icon={userIcon}
+          eventHandlers={{
+            popupopen: () => onPopupVisibilityChange(true),
+            popupclose: () => onPopupVisibilityChange(false),
+          }}
+        >
           <Popup>
             <div className="text-sm font-medium">ตำแหน่งของคุณ</div>
             {userAccuracyMeters && (
@@ -338,6 +355,7 @@ export default function Home() {
   const [showFuelAssistant, setShowFuelAssistant] = useState(false);
   const [selectedFuelFilter, setSelectedFuelFilter] = useState<string>('ALL');
   const [assistantQuote, setAssistantQuote] = useState(ASSISTANT_QUOTES[0]);
+  const [isMapPopupOpen, setIsMapPopupOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
@@ -686,11 +704,13 @@ export default function Home() {
               nearRangeKm={nearRangeKm}
               userAccuracyMeters={userAccuracyMeters}
               onNavigate={navigateToStation}
+              onPopupVisibilityChange={setIsMapPopupOpen}
             />
           </MapContainer>
         )}
       </main>
 
+      {!isMapPopupOpen && (
       <div className={`fixed left-5 z-50 transition-all ${showNearPanel ? 'bottom-32' : 'bottom-52'}`}>
         {!showFuelAssistant && !showNearPanel && (
           <div className="mb-2 max-w-[260px] rounded-xl border border-white/25 bg-white/20 px-3 py-2 text-[11px] leading-relaxed text-white shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-black/25">
@@ -745,6 +765,7 @@ export default function Home() {
           </div>
         )}
       </div>
+      )}
 
       <div className="fixed bottom-4 right-4 z-30">
         {showNearPanel && (
