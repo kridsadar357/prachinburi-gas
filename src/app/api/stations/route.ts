@@ -59,6 +59,67 @@ type UiStation = {
   latestReport: Record<string, boolean>;
 };
 
+function toLatestReportBooleans(
+  latestReport?: z.infer<typeof UpstreamStationSchema>["latestReport"]
+): Record<string, boolean> {
+  const mapped = latestReport || {};
+  const result: Record<string, boolean> = {};
+  const statusToBool = (status?: z.infer<typeof FuelStatusSchema>) => {
+    if (!status || status === "unknown") return undefined;
+    if (status === "out") return false;
+    return true;
+  };
+
+  const diesel = statusToBool(mapped.diesel);
+  const dieselB20 = statusToBool(mapped.dieselB20);
+  const benzineG95 = statusToBool(mapped.benzineG95);
+  const benzineG91 = statusToBool(mapped.benzineG91);
+  const benzineE20 = statusToBool(mapped.benzineE20);
+  const benzineE85 = statusToBool(mapped.benzineE85);
+
+  if (diesel !== undefined) result["ดีเซล"] = diesel;
+  if (dieselB20 !== undefined) result.B20 = dieselB20;
+  if (benzineG95 !== undefined) result["95"] = benzineG95;
+  if (benzineG91 !== undefined) result["91"] = benzineG91;
+  if (benzineE20 !== undefined) result.E20 = benzineE20;
+  if (benzineE85 !== undefined) result.E85 = benzineE85;
+
+  return result;
+}
+
+async function fetchUpstreamStations(): Promise<UiStation[] | null> {
+  try {
+    const upstream = await fetch(STATIONS_API_URL, {
+      method: "GET",
+      cache: "no-store",
+    });
+    if (!upstream.ok) return null;
+    const raw = await upstream.json();
+    const parsed = UpstreamResponseSchema.safeParse(raw);
+    if (!parsed.success) return null;
+
+    return parsed.data.stations.map((station) => {
+      const report = toLatestReportBooleans(station.latestReport);
+      return {
+        id: station.id,
+        name: station.name,
+        district: normalizeDistrict(station.district),
+        province: PROVINCE_NAME,
+        brandId: station.brandId || "OTHER",
+        lat: station.lat,
+        lon: station.lon,
+        latestReport: report,
+        fuels: Object.entries(report).map(([fuel, available]) => ({
+          fuel,
+          available: Boolean(available),
+        })),
+      };
+    });
+  } catch {
+    return null;
+  }
+}
+
 function normalizeDistrict(district?: string | null): string {
   if (!district) return "-";
   return district
@@ -118,49 +179,20 @@ function mapStationFromDb(station: {
 
 async function syncFromUpstream(): Promise<boolean> {
   try {
-    const upstream = await fetch(STATIONS_API_URL, {
-      method: "GET",
-      cache: "no-store",
-    });
-    if (!upstream.ok) return false;
-
-    const raw = await upstream.json();
-    const parsed = UpstreamResponseSchema.safeParse(raw);
-    if (!parsed.success) return false;
+    const stations = await fetchUpstreamStations();
+    if (!stations) return false;
 
     const now = new Date();
-    const records = parsed.data.stations.map((station) => {
-      const latestReport: Record<string, boolean> = {};
-      const mapped = station.latestReport || {};
-      const statusToBool = (status?: z.infer<typeof FuelStatusSchema>) => {
-        if (!status || status === "unknown") return undefined;
-        if (status === "out") return false;
-        return true;
-      };
-
-      const diesel = statusToBool(mapped.diesel);
-      const dieselB20 = statusToBool(mapped.dieselB20);
-      const benzineG95 = statusToBool(mapped.benzineG95);
-      const benzineG91 = statusToBool(mapped.benzineG91);
-      const benzineE20 = statusToBool(mapped.benzineE20);
-      const benzineE85 = statusToBool(mapped.benzineE85);
-
-      if (diesel !== undefined) latestReport["ดีเซล"] = diesel;
-      if (dieselB20 !== undefined) latestReport.B20 = dieselB20;
-      if (benzineG95 !== undefined) latestReport["95"] = benzineG95;
-      if (benzineG91 !== undefined) latestReport["91"] = benzineG91;
-      if (benzineE20 !== undefined) latestReport.E20 = benzineE20;
-      if (benzineE85 !== undefined) latestReport.E85 = benzineE85;
-
+    const records = stations.map((station) => {
       return {
         id: station.id,
         name: station.name,
-        brandId: station.brandId || "other",
+        brandId: station.brandId || "OTHER",
         district: normalizeDistrict(station.district),
         province: PROVINCE_NAME,
         lat: station.lat,
         lon: station.lon,
-        latestReport,
+        latestReport: station.latestReport,
         syncedAt: now,
       };
     });
@@ -185,7 +217,8 @@ async function syncFromUpstream(): Promise<boolean> {
     );
 
     return true;
-  } catch {
+  } catch (error) {
+    console.error("syncFromUpstream failed:", error);
     return false;
   }
 }
@@ -299,7 +332,25 @@ export async function GET(req: NextRequest) {
         },
       }
     );
-  } catch {
+  } catch (error) {
+    console.error("GET /api/stations failed, using upstream fallback:", error);
+    const fallbackStations = await fetchUpstreamStations();
+    if (fallbackStations) {
+      return NextResponse.json(
+        {
+          province: PROVINCE_NAME,
+          source: "upstream-fallback",
+          allowReport: false,
+          stations: fallbackStations,
+        },
+        {
+          status: 200,
+          headers: {
+            "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+          },
+        }
+      );
+    }
     return NextResponse.json(
       { error: "Failed to load station data." },
       { status: 500 }
