@@ -27,6 +27,15 @@ model Station {
   @@map("stations")
 }
 
+// Stations to hide from the map (wrong location, closed, duplicate, etc.).
+model HiddenStation {
+  stationId String   @id @map("station_id")
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("hidden_stations")
+}
+
 // Tracks out-of-stock status by station and fuel type.
 model StationFuelStatus {
   stationId  String    @map("station_id")

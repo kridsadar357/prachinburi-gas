@@ -698,33 +698,14 @@ export default function Home() {
         style={{ top: 'max(env(safe-area-inset-top), 8px)' }}
       >
         <div className="mx-auto max-w-6xl rounded-[28px] border border-white/20 bg-white/20 px-3 py-2.5 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/10">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-3">
+          <div className="flex min-w-0 flex-nowrap items-center gap-2 md:gap-3">
+            <div className="flex min-w-0 shrink-0 items-center gap-2 md:gap-3">
               <div className="shrink-0 rounded-2xl bg-emerald-600 p-2 text-white shadow-lg shadow-emerald-500/30">
                 <Fuel className="h-4 w-4" />
               </div>
-              <div className="min-w-0">
-                <h1 className="truncate text-base font-semibold leading-tight md:text-lg">ค้นหาปั๊มน้ำมัน</h1>
-                <p className="truncate text-[12px] text-muted-foreground md:text-xs">ปราจีนบุรี ประเทศไทย</p>
-              </div>
             </div>
 
-            <div className="flex shrink-0 items-center gap-2">
-              <ThemeToggle variant="glass" />
-              <Button
-                size="icon"
-                variant="ghost"
-                className="rounded-xl border border-white/20 bg-white/15 text-foreground hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20"
-                onClick={fetchStations}
-                aria-label="refresh"
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-2.5 flex items-center gap-2">
-            <div className="relative flex-1">
+            <div className="relative min-w-0 flex-1">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={search}
@@ -764,11 +745,24 @@ export default function Home() {
                 </div>
               )}
             </div>
+
+            <div className="ml-auto flex shrink-0 items-center gap-2">
+              <ThemeToggle variant="glass" />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="rounded-xl border border-white/20 bg-white/15 text-foreground hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20"
+                onClick={fetchStations}
+                aria-label="refresh"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="absolute inset-0 z-0 pt-28 md:pt-32">
+      <main className="absolute inset-0 z-0 pt-24 md:pt-28">
         {mapReady && (
           <MapContainer
             center={[PRACHINBURI_CENTER.lat, PRACHINBURI_CENTER.lng]}

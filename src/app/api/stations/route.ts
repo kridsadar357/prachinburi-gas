@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
+import { filterOutHiddenStations, loadHiddenStationIds } from "@/lib/hidden-stations";
 
 const STATIONS_API_URL =
   "https://www.thaipumpradar.com/api/provinces/ปราจีนบุรี/stations";
@@ -317,13 +318,15 @@ export async function GET(req: NextRequest) {
 
     const mapped = stations.map(mapStationFromDb);
     const merged = await applyReportOverlay(mapped);
+    const hiddenIds = await loadHiddenStationIds();
+    const visible = filterOutHiddenStations(merged, hiddenIds);
 
     return NextResponse.json(
       {
         province: PROVINCE_NAME,
         source: "database",
         allowReport,
-        stations: merged,
+        stations: visible,
       },
       {
         status: 200,
@@ -336,12 +339,14 @@ export async function GET(req: NextRequest) {
     console.error("GET /api/stations failed, using upstream fallback:", error);
     const fallbackStations = await fetchUpstreamStations();
     if (fallbackStations) {
+      const hiddenIds = await loadHiddenStationIds();
+      const visible = filterOutHiddenStations(fallbackStations, hiddenIds);
       return NextResponse.json(
         {
           province: PROVINCE_NAME,
           source: "upstream-fallback",
           allowReport: false,
-          stations: fallbackStations,
+          stations: visible,
         },
         {
           status: 200,
