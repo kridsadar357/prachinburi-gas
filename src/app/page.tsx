@@ -167,7 +167,7 @@ function MarkersLayer({
       for (const warning of ['0', '1']) {
         const key = `${brand}-${warning}`;
         const html = `
-          <div style="position:relative;transform:translate(-50%,-100%);">
+          <div style="position:relative;">
             <img src="${BRAND_ASSET[brand]?.logo || BRAND_ASSET.OTHER.logo}" style="width:34px;height:34px;border-radius:999px;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.35);" />
             ${
               warning === '1'
@@ -193,7 +193,7 @@ function MarkersLayer({
   if (!L) return null;
   const userIcon = L.divIcon({
     html: `
-      <div style="position:relative;transform:translate(-50%,-50%);">
+      <div style="position:relative;">
         <div style="width:14px;height:14px;border-radius:999px;background:#2563eb;border:2px solid #fff;box-shadow:0 0 0 6px rgba(37,99,235,.2)"></div>
       </div>
     `,
