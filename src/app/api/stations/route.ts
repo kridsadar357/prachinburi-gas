@@ -22,6 +22,25 @@ const FuelStatusSchema = z.enum([
   "unknown",
 ]);
 
+/** thaipumpradar.com uses D/G95/…; older code expected diesel/benzineG95. */
+const UpstreamLatestReportSchema = z
+  .object({
+    diesel: FuelStatusSchema.optional(),
+    dieselB20: FuelStatusSchema.optional(),
+    benzineG95: FuelStatusSchema.optional(),
+    benzineG91: FuelStatusSchema.optional(),
+    benzineE20: FuelStatusSchema.optional(),
+    benzineE85: FuelStatusSchema.optional(),
+    D: FuelStatusSchema.optional(),
+    B20: FuelStatusSchema.optional(),
+    G95: FuelStatusSchema.optional(),
+    G91: FuelStatusSchema.optional(),
+    E20: FuelStatusSchema.optional(),
+    E85: FuelStatusSchema.optional(),
+    fuelStatuses: z.record(z.string()).optional(),
+  })
+  .passthrough();
+
 const UpstreamStationSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -30,18 +49,39 @@ const UpstreamStationSchema = z.object({
   brandId: z.string().optional().nullable(),
   lat: z.number(),
   lon: z.number(),
-  latestReport: z
-    .object({
-      diesel: FuelStatusSchema.optional(),
-      dieselB20: FuelStatusSchema.optional(),
-      benzineG95: FuelStatusSchema.optional(),
-      benzineG91: FuelStatusSchema.optional(),
-      benzineE20: FuelStatusSchema.optional(),
-      benzineE85: FuelStatusSchema.optional(),
-    })
-    .optional()
-    .nullable(),
+  latestReport: UpstreamLatestReportSchema.optional().nullable(),
 });
+
+/** Upstream field name → UI keys (must match page.tsx FUEL_TYPES / mapFuelStatus). */
+const UPSTREAM_FUEL_KEY_MAP: ReadonlyArray<[string, string]> = [
+  ["diesel", "ดีเซล"],
+  ["D", "ดีเซล"],
+  ["dieselB20", "B20"],
+  ["B20", "B20"],
+  ["benzineG95", "95"],
+  ["G95", "95"],
+  ["benzineG91", "91"],
+  ["G91", "91"],
+  ["benzineE20", "E20"],
+  ["E20", "E20"],
+  ["benzineE85", "E85"],
+  ["E85", "E85"],
+];
+
+const UPSTREAM_KEY_TO_UI = new Map<string, string>(UPSTREAM_FUEL_KEY_MAP);
+
+function statusToAvailability(status?: string | null): boolean | undefined {
+  if (!status || status === "unknown") return undefined;
+  if (status === "out") return false;
+  if (
+    status === "available" ||
+    status === "limited" ||
+    status === "pending_delivery"
+  ) {
+    return true;
+  }
+  return undefined;
+}
 
 const UpstreamResponseSchema = z.object({
   province: z.string(),
@@ -61,29 +101,30 @@ type UiStation = {
 };
 
 function toLatestReportBooleans(
-  latestReport?: z.infer<typeof UpstreamStationSchema>["latestReport"]
+  latestReport?: z.infer<typeof UpstreamLatestReportSchema> | null
 ): Record<string, boolean> {
-  const mapped = latestReport || {};
+  if (!latestReport || typeof latestReport !== "object") return {};
+
   const result: Record<string, boolean> = {};
-  const statusToBool = (status?: z.infer<typeof FuelStatusSchema>) => {
-    if (!status || status === "unknown") return undefined;
-    if (status === "out") return false;
-    return true;
+  const row = latestReport as Record<string, unknown>;
+
+  const setFromStatus = (uiKey: string, status: string | undefined) => {
+    const b = statusToAvailability(status);
+    if (b !== undefined) result[uiKey] = b;
   };
 
-  const diesel = statusToBool(mapped.diesel);
-  const dieselB20 = statusToBool(mapped.dieselB20);
-  const benzineG95 = statusToBool(mapped.benzineG95);
-  const benzineG91 = statusToBool(mapped.benzineG91);
-  const benzineE20 = statusToBool(mapped.benzineE20);
-  const benzineE85 = statusToBool(mapped.benzineE85);
+  const nested = row.fuelStatuses;
+  if (nested && typeof nested === "object" && !Array.isArray(nested)) {
+    for (const [key, val] of Object.entries(nested)) {
+      const ui = UPSTREAM_KEY_TO_UI.get(key);
+      if (ui && typeof val === "string") setFromStatus(ui, val);
+    }
+  }
 
-  if (diesel !== undefined) result["ดีเซล"] = diesel;
-  if (dieselB20 !== undefined) result.B20 = dieselB20;
-  if (benzineG95 !== undefined) result["95"] = benzineG95;
-  if (benzineG91 !== undefined) result["91"] = benzineG91;
-  if (benzineE20 !== undefined) result.E20 = benzineE20;
-  if (benzineE85 !== undefined) result.E85 = benzineE85;
+  for (const [upstreamKey, uiKey] of UPSTREAM_FUEL_KEY_MAP) {
+    const raw = row[upstreamKey];
+    if (typeof raw === "string") setFromStatus(uiKey, raw);
+  }
 
   return result;
 }
